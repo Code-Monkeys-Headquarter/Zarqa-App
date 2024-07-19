@@ -1,4 +1,4 @@
-package code.monkeys.zarqa.data.views.auth.login
+package code.monkeys.zarqa.data.views.auth.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,16 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import code.monkeys.zarqa.R
-import code.monkeys.zarqa.data.views.auth.register.RegisterActivity
-import code.monkeys.zarqa.data.views.main.MainActivity
-import code.monkeys.zarqa.databinding.ActivityLoginBinding
+import code.monkeys.zarqa.data.views.auth.login.LoginActivity
+import code.monkeys.zarqa.databinding.ActivityRegisterBinding
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -26,21 +25,21 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-//        List Level Item
         val items = listOf("Admin", "Pekerja Gudang", "Dropshipper")
         val adapter = ArrayAdapter(this, R.layout.list_item_role, items)
+
         binding.apply {
             edtRoleItem.setAdapter(adapter)
-            btnCreateNewAccount.setOnClickListener {
-                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            btnRegister.setOnClickListener {
+                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                 finish()
             }
-            btnLogin.setOnClickListener {
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            btnAlreadyHaveAccount.setOnClickListener {
+                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                 finish()
             }
         }
+
 
 
     }

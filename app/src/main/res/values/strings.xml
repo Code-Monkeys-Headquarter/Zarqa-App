@@ -25,7 +25,12 @@
     <string name="invalid_password">Password tidak valid, harus melebihi 5 karakter</string>
     <string name="login_failed">"Login Gagal"</string>
     <string name="login_success">"Login Berhasil"</string>
-    <string name="register_title">Daftar Akun Baru !</string>"
+    <string name="create_new_account">Daftar Akun Baru!</string>
+    <string name="already_have_account">Sudah Mempunyai Akun?</string>
+    <string name="register_title">Daftar Akun Baru</string>
+    <string name="register_content">Nama lengkap, Nomor Telepon, E-mail dan Password harus terisi</string>
+    <string name="register_failed">"Pendaftaran Gagal"</string>
+    <string name="register_success">"Pendaftaran Berhasil"</string>
 
 
 </resources>
