@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">Zarqa</string>
+
+    <!-- Auth Proccess -->
+    <string name="login">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="logout">Keluar</string>
+    <string name="fullname">Nama Lengkap</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="phone">Nomor Telepon</string>
+    <string name="role">Pilih Role Anda</string>
+    <string-array name="role_array">
+        <item>Admin</item>
+        <item>Dropshipper</item>
+        <item>Pekerja Gudang</item>
+    </string-array>
+    <string name="role_admin">Admin</string>
+    <string name="role_dropshipper">Dropshipper</string>
+    <string name="role_gudang">Pekerja Gudang</string>
+    <string name="login_title">Masuk ke Akun Anda</string>
+    <string name="login_content">Masukkan Email &amp; Password dengan benar, perhatikan huruf kapital</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="invalid_email">Email tidak valid</string>
+    <string name="invalid_password">Password tidak valid, harus melebihi 5 karakter</string>
+    <string name="login_failed">"Login Gagal"</string>
+    <string name="login_success">"Login Berhasil"</string>
+    <string name="register_title">Daftar Akun Baru !</string>"
+
+
 </resources>

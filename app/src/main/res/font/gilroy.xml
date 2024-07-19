@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font android:font="@font/gilroy_black"/>
+    <font android:font="@font/gilroy_bold"/>
+    <font android:font="@font/gilroy_extrabold"/>
+    <font android:font="@font/gilroy_light"/>
+    <font android:font="@font/gilroy_lightitalic"/>
+    <font android:font="@font/gilroy_medium"/>
+    <font android:font="@font/gilroy_mediumitalic"/>
+    <font android:font="@font/gilroy_regular"/>
+    <font android:font="@font/gilroy_regularitalic"/>
+    <font android:font="@font/gilroy_semibold"/>
+    <font android:font="@font/gilroy_semibolditalic"/>
+    <font android:font="@font/gilroy_thin"/>
+    <font android:font="@font/gilroy_thinitalic"/>
+</font-family>
