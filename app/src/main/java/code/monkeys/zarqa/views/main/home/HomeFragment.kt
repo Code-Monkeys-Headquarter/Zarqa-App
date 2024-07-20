@@ -1,4 +1,4 @@
-package code.monkeys.zarqa.data.views.main.home
+package code.monkeys.zarqa.views.main.home
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle

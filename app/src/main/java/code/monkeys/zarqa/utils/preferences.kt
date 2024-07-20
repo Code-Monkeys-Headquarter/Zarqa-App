@@ -1,4 +1,4 @@
-package code.monkeys.zarqa.data.utils
+package code.monkeys.zarqa.utils
 
 import android.content.Context
 import android.content.SharedPreferences

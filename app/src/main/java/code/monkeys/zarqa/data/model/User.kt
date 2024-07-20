@@ -1,12 +1,14 @@
 package code.monkeys.zarqa.data.model
 
-import java.nio.file.attribute.UserPrincipal
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class User (
-    private val id: Int?,
-    private val fullname: String?,
-    private val email: String?,
-    private val password: String?,
-    private val phone: Int?,
-    private val role: String?
+@Entity(tableName = "users")
+data class User(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = 0,
+    val fullname: String?,
+    val email: String?,
+    val password: String?,
+    val role: String?
 )
