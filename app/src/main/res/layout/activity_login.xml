@@ -2,148 +2,156 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@drawable/background_login">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="16dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Zarqa"
-        android:textColor="@color/white"
-        android:fontFamily="@font/gilroy_bold"
-        android:textSize="52sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_shape"
-        android:orientation="vertical"
-        android:padding="20dp"
+        android:layout_margin="20dp"
+        android:elevation="4dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/gilroy_semibold"
-            android:text="@string/login_title"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/grey"
-            android:layout_marginBottom="40dp"
-            android:fontFamily="@font/gilroy_medium"
-            android:text="@string/login_content"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edt_role"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:hint="@string/role"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="14sp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            tools:ignore="TextFields">
-
-            <AutoCompleteTextView
-                android:id="@+id/edt_role_item"
-                android:maxLines="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <EditText
-            android:id="@+id/edt_email"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="15sp"
-            tools:ignore="TextFields" />
-
-        <EditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textSize="15sp"
-            tools:ignore="TextFields" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:backgroundTint="@color/black"
-            android:text="@string/login"
-            app:cornerRadius="16dp" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
 
         <LinearLayout
-            android:id="@+id/btn_create_new_account"
-            android:layout_marginBottom="10dp"
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="@drawable/login_shape"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:fontFamily="@font/gilroy_mediumitalic"
-                android:maxLines="1"
-                android:text="@string/create_new_account"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/gilroy_semibold"
+                android:text="@string/login_title"
+                android:textSize="22sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:fontFamily="@font/gilroy_bold"
-                android:maxLines="1"
-                android:text="@string/register"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/gilroy_medium"
+                android:text="@string/login_content"
                 android:textAlignment="center"
-                android:textSize="16sp" />
+                android:textColor="@color/grey"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edt_role"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:hint="@string/role"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="14sp"
+                tools:ignore="TextFields">
+
+                <AutoCompleteTextView
+                    android:textSize="15sp"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:id="@+id/edt_role_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/gilroy_medium"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="15sp"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/gilroy_medium"
+                android:layout_marginBottom="4dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="15sp"
+                tools:ignore="TextFields" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/black"
+                android:text="@string/login"
+                app:cornerRadius="8dp" />
+
+
+            <LinearLayout
+                android:id="@+id/btn_create_new_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/gilroy_mediumitalic"
+                    android:maxLines="1"
+                    android:text="@string/create_new_account"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:fontFamily="@font/gilroy_bold"
+                    android:maxLines="1"
+                    android:text="@string/register"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

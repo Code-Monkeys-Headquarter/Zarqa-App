@@ -11,6 +11,7 @@ import code.monkeys.zarqa.R
 import code.monkeys.zarqa.data.views.auth.login.LoginActivity
 import code.monkeys.zarqa.databinding.ActivityRegisterBinding
 
+@Suppress("DEPRECATION")
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
@@ -32,10 +33,12 @@ class RegisterActivity : AppCompatActivity() {
             edtRoleItem.setAdapter(adapter)
             btnRegister.setOnClickListener {
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                 finish()
             }
             btnAlreadyHaveAccount.setOnClickListener {
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                 finish()
             }
         }
