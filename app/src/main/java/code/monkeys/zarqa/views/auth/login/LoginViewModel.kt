@@ -7,14 +7,13 @@ import androidx.lifecycle.viewModelScope
 import code.monkeys.zarqa.data.model.User
 import code.monkeys.zarqa.repository.Repository
 import kotlinx.coroutines.launch
+import retrofit2.Callback
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
-
-    val loginResult: LiveData<Result<User>> = repository.loginResult
-
-    fun login(email: String, password: String, role: String) {
+    fun login(email: String, password: String, callback: (User?) -> Unit) {
         viewModelScope.launch {
-            repository.login(email, password, role)
+            val user = repository.login(email, password)
+            callback(user)
         }
     }
 }

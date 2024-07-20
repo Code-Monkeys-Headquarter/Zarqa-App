@@ -8,21 +8,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import code.monkeys.zarqa.R
-import code.monkeys.zarqa.utils.CommonUtils
-import code.monkeys.zarqa.views.auth.login.LoginActivity
 import code.monkeys.zarqa.databinding.ActivityRegisterBinding
 import code.monkeys.zarqa.repository.Repository
+import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.ViewModelFactory
+import code.monkeys.zarqa.views.auth.login.LoginActivity
 
 @Suppress("DEPRECATION")
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private val registerViewModel: RegisterViewModel by viewModels{
-        ViewModelFactory(Repository(this))
+    private val registerViewModel: RegisterViewModel by viewModels {
+        ViewModelFactory(Repository(applicationContext))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
                 val edtFullname = edtFullname.text.toString()
 
                 if (validateInput(edtFullname, edtEmail, edtPassword, edtRole)) {
-                    registerViewModel.registerUser(edtFullname, edtEmail, edtPassword, edtRole)
+                    registerViewModel.register(edtFullname, edtEmail, edtPassword, edtRole)
                 }
             }
             btnAlreadyHaveAccount.setOnClickListener {
@@ -57,26 +56,15 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        registerViewModel.registerResult.observe(this, Observer { result ->
-            result.fold(
-                onSuccess = { user ->
-                    CommonUtils.showToast(this, "Register berhasil")
-                    val intent = Intent(this, LoginActivity::class.java)
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-                    startActivity(intent)
-                    finish()
-                },
-                onFailure = { error ->
-                    CommonUtils.showToast(this, "Register gagal: ${error.message}")
-                }
-            )
-
-        })
-
-
 
     }
-    private fun validateInput(email: String, password: String, role: String, fullname: String): Boolean {
+
+    private fun validateInput(
+        email: String,
+        password: String,
+        role: String,
+        fullname: String
+    ): Boolean {
         if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
             CommonUtils.showToast(this@RegisterActivity, "Silahkan isi semua data")
             return false
