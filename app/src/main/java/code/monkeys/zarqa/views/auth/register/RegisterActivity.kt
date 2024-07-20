@@ -46,7 +46,9 @@ class RegisterActivity : AppCompatActivity() {
                 val edtFullname = edtFullname.text.toString()
 
                 if (validateInput(edtFullname, edtEmail, edtPassword, edtRole)) {
-                    registerViewModel.register(edtFullname, edtEmail, edtPassword, edtRole)
+                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+                    finish()
                 }
             }
             btnAlreadyHaveAccount.setOnClickListener {
@@ -55,8 +57,6 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-
     }
 
     private fun validateInput(

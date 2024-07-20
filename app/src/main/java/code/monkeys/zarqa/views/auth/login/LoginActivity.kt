@@ -18,6 +18,7 @@ import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.admin.AdminActivity
 import code.monkeys.zarqa.views.auth.register.RegisterActivity
 import code.monkeys.zarqa.views.dropshipper.DropshipperActivity
+import code.monkeys.zarqa.views.main.MainActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
 
 @Suppress("DEPRECATION")
@@ -45,14 +46,15 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
             btnLogin.setOnClickListener {
-                val email = edtEmail.text.toString()
-                val password = edtPassword.text.toString()
-                if (validateInput(email, password)) {
-                    loginViewModel.login(email, password) {
-                        if (it != null) {
+                val email = edtEmail.text.toString().trim()
+                val password = edtPassword.text.toString().trim()
 
-                        }
-                    }
+                if (validateInput(email, password)) {
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
             }
         }
