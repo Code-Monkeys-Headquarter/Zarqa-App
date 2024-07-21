@@ -33,4 +33,8 @@
     <string name="register_success">"Pendaftaran Berhasil"</string>
 
 
+    <!-- Worker Home -->
+    <string name="worker_home_title_dashboard">Dashboard</string>
+
+
 </resources>
