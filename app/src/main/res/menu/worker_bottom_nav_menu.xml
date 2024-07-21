@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Beranda"
+        app:cnb_iconColor="#000000"
+        />
+
+    <item
+        android:id="@+id/nav_warehouse"
+        android:icon="@drawable/ic_warehouse"
+        android:title="Gudang"
+        app:cnb_iconColor="#000000"
+        />
+
+    <item
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_history"
+        android:title="Riwayat"
+        app:cnb_iconColor="#000000"
+        />
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Pengaturan"
+        app:cnb_iconColor="#000000"
+        />
+</menu>
