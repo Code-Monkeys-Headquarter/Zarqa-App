@@ -35,6 +35,12 @@
 
     <!-- Worker Home -->
     <string name="worker_home_title_dashboard">Dashboard</string>
+    <string name="worker_dashboard_total_stock">Jumlah Barang</string>
+    <string name="worker_dashboard_total_value">Value Barang</string>
+    <string name="worker_dashboard_stock_in_a_day">Barang Masuk Hari Ini</string>
+    <string name="worker_dashboard_stock_out_a_day">Barang Keluar Hari Ini</string>
+    <string name="worker_dahsboard_stock_in">In</string>
+    <string name="worker_dahsboard_stock_out">Out</string>
 
 
 </resources>

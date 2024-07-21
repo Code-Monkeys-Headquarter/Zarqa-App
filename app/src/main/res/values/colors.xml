@@ -3,4 +3,13 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
+    
+    <color name="purple_dashboard">#8a60fe</color>
+    <color name="pink_dashboard">#fe5ae7</color>
+    <color name="sky_blue_dashboard">#30c2f3</color>
+    <color name="gold_dashboard">#f3a844</color>
+    
+    <color name="purple_inventory">#ad59fe</color>
+    <color name="blue_inventory">#44b0f9</color>
+    <color name="dark_pink_inventory">#ef0d89</color>
 </resources>
