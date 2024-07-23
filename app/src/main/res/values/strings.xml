@@ -45,6 +45,9 @@
     <string name="worker_warehouse_btn_add_product">Tambah\nProduk</string>
     <string name="worker_warehouse_btn_get_product">Ambil\nProduk</string>
     <string name="worker_warehouse_btn_restock_product">Restock\nProduk</string>
+    <string name="worker_warehouse_tab_layout_title1">Semua Produk</string>
+    <string name="worker_warehouse_tab_layout_title2">Stok Rendah</string>
+    <string name="worker_warehouse_tab_layout_title3">Hapus Produk</string>
 
 
 </resources>
