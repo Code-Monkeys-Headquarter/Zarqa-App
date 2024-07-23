@@ -1,5 +1,6 @@
 package code.monkeys.zarqa.views.worker.warehouse
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.annotation.StringRes
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.FragmentWorkerSettingBinding
 import code.monkeys.zarqa.databinding.FragmentWorkerWarehouseBinding
+import code.monkeys.zarqa.views.worker.warehouse.product.add.AddProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.SectionPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -60,5 +62,12 @@ class WorkerWarehouseFragment : Fragment() {
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
+        binding.apply {
+            btnAddProduct.setOnClickListener{
+                val intent = Intent(requireContext(), AddProductActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }

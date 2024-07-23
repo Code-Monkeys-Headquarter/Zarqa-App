@@ -49,5 +49,10 @@
     <string name="worker_warehouse_tab_layout_title2">Stok Rendah</string>
     <string name="worker_warehouse_tab_layout_title3">Hapus Produk</string>
 
+    <!-- Worker Product -->
+    <string name="worker_product_add_product_title">Tambah Produk</string>
+    <string name="worker_product_add_product_image_title">Gambar Produk</string>
+    <string name="worker_product_add_product_information_title">Informasi Produk</string>
+
 
 </resources>
