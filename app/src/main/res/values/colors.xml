@@ -7,9 +7,17 @@
     <color name="purple_dashboard">#8a60fe</color>
     <color name="pink_dashboard">#fe5ae7</color>
     <color name="sky_blue_dashboard">#30c2f3</color>
-    <color name="gold_dashboard">#f3a844</color>
+
+    <color name="gold">#f3a844</color>
     
     <color name="purple_inventory">#ad59fe</color>
     <color name="blue_inventory">#44b0f9</color>
     <color name="dark_pink_inventory">#ef0d89</color>
+
+    <color name="dark_green">#40A578</color>
+    <color name="soft_green">#88D66C</color>
+    <color name="dark_red">#E4003A</color>
+    <color name="soft_red">#EF5A6F</color>
+
+    <color name="tosca">#2CD3E1</color>
 </resources>

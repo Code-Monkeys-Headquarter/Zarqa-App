@@ -99,7 +99,11 @@ dependencies {
 
     // MySql Connector
     //noinspection UseTomlInstead
-    implementation ("mysql:mysql-connector-java:8.0.26")
+    implementation("mysql:mysql-connector-java:8.0.26")
+
+    // Tab layout
+    implementation(libs.androidx.viewpager2)
+
 
 
 

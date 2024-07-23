@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.FragmentWorkerSettingBinding
+import code.monkeys.zarqa.databinding.FragmentWorkerWarehouseBinding
 
 class WorkerWarehouseFragment : Fragment() {
 
-    private lateinit var binding: FragmentWorkerSettingBinding
+    private lateinit var binding: FragmentWorkerWarehouseBinding
 
     companion object {
         fun newInstance(): WorkerWarehouseFragment {
@@ -33,7 +34,7 @@ class WorkerWarehouseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWorkerSettingBinding.inflate(inflater, container, false)
+        binding = FragmentWorkerWarehouseBinding.inflate(inflater, container, false)
         return binding.root
     }
 

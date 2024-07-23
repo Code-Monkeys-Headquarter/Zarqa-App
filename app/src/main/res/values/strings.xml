@@ -41,6 +41,10 @@
     <string name="worker_dashboard_stock_out_a_day">Barang Keluar Hari Ini</string>
     <string name="worker_dahsboard_stock_in">In</string>
     <string name="worker_dahsboard_stock_out">Out</string>
+    <string name="worker_warehouse_title_warehouse">Gudang</string>
+    <string name="worker_warehouse_btn_add_product">Tambah\nProduk</string>
+    <string name="worker_warehouse_btn_get_product">Ambil\nProduk</string>
+    <string name="worker_warehouse_btn_restock_product">Restock\nProduk</string>
 
 
 </resources>
