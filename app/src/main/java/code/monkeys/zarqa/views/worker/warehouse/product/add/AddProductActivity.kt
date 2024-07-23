@@ -24,6 +24,12 @@ class AddProductActivity : AppCompatActivity() {
             insets
         }
 
+        binding.apply {
+            btnBack.setOnClickListener {
+                finish()
+            }
+        }
+
 
 
 
