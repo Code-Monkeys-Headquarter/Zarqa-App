@@ -10,10 +10,5 @@ import kotlinx.coroutines.launch
 import retrofit2.Callback
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
-    fun login(email: String, password: String, callback: (User?) -> Unit) {
-        viewModelScope.launch {
-            val user = repository.login(email, password)
-            callback(user)
-        }
-    }
+
 }

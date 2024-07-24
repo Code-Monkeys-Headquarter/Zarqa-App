@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivitySplashBinding
+import code.monkeys.zarqa.views.auth.login.LoginActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
 
 @SuppressLint("CustomSplashScreen")
@@ -29,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this@SplashActivity, WorkerActivity::class.java))
+            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
         }, 2000)

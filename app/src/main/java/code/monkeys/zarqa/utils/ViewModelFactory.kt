@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.views.auth.login.LoginViewModel
 import code.monkeys.zarqa.views.auth.register.RegisterViewModel
+import code.monkeys.zarqa.views.worker.warehouse.product.add.AddProductViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {

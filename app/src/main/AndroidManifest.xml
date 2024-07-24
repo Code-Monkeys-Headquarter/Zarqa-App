@@ -38,11 +38,13 @@
         <activity
             android:name=".views.worker.WorkerActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".views.dropshipper.DropshipperActivity"
@@ -55,7 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".views.splash.SplashActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".views.main.MainActivity"
             android:exported="false" />

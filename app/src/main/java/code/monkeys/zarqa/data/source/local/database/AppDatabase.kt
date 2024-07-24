@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import code.monkeys.zarqa.data.model.User
-import code.monkeys.zarqa.data.source.local.dao.UserDao
+import code.monkeys.zarqa.data.source.local.dao.ProductDao
+import code.monkeys.zarqa.data.source.local.entity.Product
 
-@Database(entities = [User::class], version = 2, exportSchema = false)
-abstract class AppDatabase: RoomDatabase() {
-    abstract fun userDao(): UserDao
+@Database(entities = [Product::class], version = 1, exportSchema = false)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun productDao(): ProductDao
 
 
     companion object {
@@ -21,7 +21,7 @@ abstract class AppDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "app_database"
+                    "product_database"
                 ).build()
                 INSTANCE = instance
                 instance

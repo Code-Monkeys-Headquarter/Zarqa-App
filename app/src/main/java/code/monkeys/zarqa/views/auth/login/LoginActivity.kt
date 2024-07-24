@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 val password = edtPassword.text.toString().trim()
 
                 if (validateInput(email, password)) {
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, WorkerActivity::class.java))
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                     finish()
                 } else {
