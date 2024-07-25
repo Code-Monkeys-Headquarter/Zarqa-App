@@ -12,4 +12,9 @@ object CommonUtils {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    fun getCurrentDate(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return sdf.format(Date())
+    }
+
 }

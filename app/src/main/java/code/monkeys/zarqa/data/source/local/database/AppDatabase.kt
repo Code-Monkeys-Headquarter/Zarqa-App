@@ -5,11 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import code.monkeys.zarqa.data.source.local.dao.ProductDao
+import code.monkeys.zarqa.data.source.local.dao.TransactionDao
 import code.monkeys.zarqa.data.source.local.entity.Product
+import code.monkeys.zarqa.data.source.local.entity.Transaction
 
-@Database(entities = [Product::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, Transaction::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
+    abstract fun transactionDao(): TransactionDao
 
 
     companion object {

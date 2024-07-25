@@ -24,6 +24,7 @@ import code.monkeys.zarqa.data.source.local.entity.Product
 import code.monkeys.zarqa.databinding.ActivityAddProductBinding
 import code.monkeys.zarqa.repository.ProductRepository
 import code.monkeys.zarqa.utils.CommonUtils
+import code.monkeys.zarqa.utils.Tools
 import code.monkeys.zarqa.utils.ViewModelFactoryProduct
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
 import com.google.android.material.snackbar.Snackbar
@@ -89,6 +90,7 @@ class AddProductActivity : AppCompatActivity() {
                 val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
                 val size = getSelectedSize()
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
+                val dateAdded = CommonUtils.getCurrentDate()
 
                 if (validateInput(productName, price, color, totalStock, lowStockAlert, size)) {
                     val product = Product(
@@ -98,7 +100,8 @@ class AddProductActivity : AppCompatActivity() {
                         productTotalStock = totalStock,
                         productLowStockAlert = lowStockAlert,
                         size = size,
-                        productImage = productImageUri
+                        productImage = productImageUri,
+                        dateAdded = dateAdded
                     )
                     productViewModel.insertProduct(product)
                     Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
@@ -203,6 +206,8 @@ class AddProductActivity : AppCompatActivity() {
         }
         return true
     }
+
+
 
 
 }

@@ -15,6 +15,8 @@ class Tools {
         return File.createTempFile(timeStamp, ".jpg", filesDir)
     }
 
+
+
      companion object {
         private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
     }

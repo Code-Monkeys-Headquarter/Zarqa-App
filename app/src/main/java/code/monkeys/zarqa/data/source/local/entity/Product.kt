@@ -13,5 +13,6 @@ data class Product(
     val productColor: String,
     val productTotalStock: Int,
     val productLowStockAlert: Int,
-    val size: String
+    val size: String,
+    val dateAdded: String? = null // Format Date as "2023-07-01" or "yyyy-MM-dd"
 )

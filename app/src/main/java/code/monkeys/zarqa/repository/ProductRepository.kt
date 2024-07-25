@@ -14,4 +14,19 @@ class ProductRepository(private val productDao: ProductDao) {
         productDao.insertProduct(product)
     }
 
+    fun getTotalProducts(): LiveData<Int> = productDao.getAllTotalProducts()
+
+    fun getTotalStocks(): LiveData<Int> = productDao.getTotalStock()
+
+    fun getTotalValue(): LiveData<Int> = productDao.getTotalPrice()
+
+    fun getItemsAddedToday(currentDate: String): LiveData<Int> = productDao.getItemsAddedToday(currentDate)
+
+    fun getItemsOutToday(currentDate: String): LiveData<Int> = productDao.getItemsOutToday(currentDate)
+
+    fun getStockInToday(currentDate: String): LiveData<Int> = productDao.getStockInToday(currentDate)
+
+    fun getStockOutToday(currentDate: String): LiveData<Int> = productDao.getStockOutToday(currentDate)
+
+
 }
