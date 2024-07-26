@@ -88,7 +88,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="1"
-                    android:text="12000"
+                    tools:text="12000"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -147,7 +147,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="1"
-                    android:text="Rp. 30.000.00"
+                    tools:text="Rp. 30.000.00"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -219,7 +219,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="1"
-                    android:text="224"
+                    tools:text="224"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -278,7 +278,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="1"
-                    android:text="20"
+                    tools:text="20"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

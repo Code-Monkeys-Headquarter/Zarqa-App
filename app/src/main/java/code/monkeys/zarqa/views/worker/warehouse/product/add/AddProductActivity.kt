@@ -18,6 +18,7 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.data.source.local.database.AppDatabase
 import code.monkeys.zarqa.data.source.local.entity.Product
@@ -28,6 +29,8 @@ import code.monkeys.zarqa.utils.Tools
 import code.monkeys.zarqa.utils.ViewModelFactoryProduct
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import java.sql.Date
 
 class AddProductActivity : AppCompatActivity() {
 
@@ -103,9 +106,16 @@ class AddProductActivity : AppCompatActivity() {
                         productImage = productImageUri,
                         dateAdded = dateAdded
                     )
-                    productViewModel.insertProduct(product)
-                    Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
-                        .show()
+                    lifecycleScope.launch {
+                        try {
+                            productViewModel.insertProduct(product)
+                            Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
+                                .show()
+                        } catch (e: Exception) {
+                            Log.e("LOG_ERROR", e.toString())
+                        }
+
+                    }
                 }
             }
         }

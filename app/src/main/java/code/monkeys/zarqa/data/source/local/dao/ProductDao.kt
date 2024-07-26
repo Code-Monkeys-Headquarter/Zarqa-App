@@ -10,35 +10,35 @@ import code.monkeys.zarqa.data.source.local.entity.Product
 @Dao
 interface ProductDao {
 
-//    Menambahkan Produk
+    //    Menambahkan Produk
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertProduct(product: Product)
+    fun insertProduct(product: Product)
 
-//    Mengambil data Total Produk
+    //    Mengambil data Total Produk
     @Query("SELECT COUNT(*) FROM product_table")
     fun getAllTotalProducts(): LiveData<Int>
 
-//    Mengambil data Produk yang Low Stock
+    //    Mengambil data Produk yang Low Stock
     @Query("SELECT * FROM product_table WHERE productTotalStock <=  productLowStockAlert")
     fun getLowStockProduct(): LiveData<List<Product>>
 
-//    Mengambil data total stock
+    //    Mengambil data total stock
     @Query("SELECT SUM(productTotalStock) FROM product_table")
     fun getTotalStock(): LiveData<Int>
 
-//    Mengambil data total harga dari setiap Stock
+    //    Mengambil data total harga dari setiap Stock
     @Query("SELECT SUM(productPrice * productTotalStock) FROM product_table")
     fun getTotalPrice(): LiveData<Int>
 
-//    Mengambil data item atau produk yang ditambah hari ini
+    //    Mengambil data item atau produk yang ditambah hari ini
     @Query("SELECT COUNT(*) FROM product_table WHERE dateAdded = :currentDate")
     fun getItemsAddedToday(currentDate: String): LiveData<Int>
 
-//    Mengambil data Item atau produk yang di ambil hari ini
+    //    Mengambil data Item atau produk yang di ambil hari ini
     @Query("SELECT COUNT(*) FROM transaction_table WHERE type = 'OUT' AND date = :currentDate")
     fun getItemsOutToday(currentDate: String): LiveData<Int>
 
-//    Mengambil data stock produk yang ditambahkan hari ini
+    //    Mengambil data stock produk yang ditambahkan hari ini
     @Query("SELECT SUM(quantity) FROM transaction_table WHERE type = 'IN' AND date = :currentDate")
     fun getStockInToday(currentDate: String): LiveData<Int>
 

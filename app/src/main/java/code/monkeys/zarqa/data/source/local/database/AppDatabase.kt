@@ -19,16 +19,23 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        private const val DATABASE_NAME = "zarqa_db"
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "product_database"
+                    DATABASE_NAME
                 ).build()
                 INSTANCE = instance
                 instance
             }
+        }
+
+        fun resetDatabase(context: Context) {
+            context.deleteDatabase(DATABASE_NAME)
+            INSTANCE = null
         }
     }
 }

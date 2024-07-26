@@ -67,6 +67,9 @@ class LoginActivity : AppCompatActivity() {
             CommonUtils.showToast(this@LoginActivity, "Silahkan isi semua data")
             return false
         }
+
+
+
         if (password.length < 5) {
             CommonUtils.showToast(this@LoginActivity, "Password minimal 5 karakter")
             return false
