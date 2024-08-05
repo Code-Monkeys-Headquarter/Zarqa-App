@@ -16,10 +16,10 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    fun register(name: String, outlet_name: String, email: String, password: String, role: String) {
+    fun register(name: String, outlet_name: String, phone: String, email: String, password: String, role: String) {
         viewModelScope.launch {
             try {
-                val response = repository.register(name, outlet_name, email, password, role)
+                val response = repository.register(name, outlet_name, phone, email, password, role)
                 _registerResponse.postValue(response)
             } catch (e: Exception) {
                 _error.postValue(e.message)

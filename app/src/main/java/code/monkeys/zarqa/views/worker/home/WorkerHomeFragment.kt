@@ -39,12 +39,6 @@ class WorkerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val application = requireNotNull(this.activity).application
-        val productDao = AppDatabase.getDatabase(application).productDao()
-        val repository = ProductRepository(productDao)
-        val viewModelFactory = ViewModelFactoryProduct(repository)
-        workerHomeViewModel = ViewModelProvider(this, viewModelFactory)[WorkerHomeViewModel::class.java]
-
 
 
         lifecycleScope.launch {
@@ -57,53 +51,53 @@ class WorkerHomeFragment : Fragment() {
 
     }
 
-    private fun getTotalItems() {
-        workerHomeViewModel.getTotalItems().observe(viewLifecycleOwner) {
-            Log.i("WORKER_HOME_INFORMATION", it.toString())
-            binding.tvTotalStockItem.text = it.toString()
-        }
-
-    }
-
-    private fun getTotalValue() {
-
-        workerHomeViewModel.getTotalValue().observe(viewLifecycleOwner) {
-            Log.i("WORKER_HOME_INFORMATION", it.toString())
-            val formattedValue = CommonUtils.formatCurrency(it)
-            binding.tvTotalStockValue.text = formattedValue
-        }
-
-    }
-
-    private fun getItemsAddedToday() {
-        workerHomeViewModel.getItemsAddedToday(CommonUtils.getCurrentDate())
-            .observe(viewLifecycleOwner) {
-                Log.i("WORKER_HOME_INFORMATION", it.toString())
-                binding.tvTotalStockItemInADay.text = it.toString()
-            }
-    }
-
-    private fun getItemsOutToday() {
-
-        workerHomeViewModel.getItemsOutToday(CommonUtils.getCurrentDate())
-
-            .observe(viewLifecycleOwner) {
-                Log.i("WORKER_HOME_INFORMATION", it.toString())
-                binding.tvTotalStockItemOutADay.text = it.toString()
-            }
-
-    }
-
-    private fun resetDatabase() {
-        val application = requireActivity().application
-        AppDatabase.resetDatabase(application)
-        // After resetting the database, you might want to recreate the database and repopulate it if necessary
-        val productDao = AppDatabase.getDatabase(application).productDao()
-        val repository = ProductRepository(productDao)
-        val viewModelFactory = ViewModelFactoryProduct(repository)
-        workerHomeViewModel = ViewModelProvider(this, viewModelFactory)[WorkerHomeViewModel::class.java]
-        // Re-fetch data or handle UI updates here
-    }
+//    private fun getTotalItems() {
+//        workerHomeViewModel.getTotalItems().observe(viewLifecycleOwner) {
+//            Log.i("WORKER_HOME_INFORMATION", it.toString())
+//            binding.tvTotalStockItem.text = it.toString()
+//        }
+//
+//    }
+//
+//    private fun getTotalValue() {
+//
+//        workerHomeViewModel.getTotalValue().observe(viewLifecycleOwner) {
+//            Log.i("WORKER_HOME_INFORMATION", it.toString())
+//            val formattedValue = CommonUtils.formatCurrency(it)
+//            binding.tvTotalStockValue.text = formattedValue
+//        }
+//
+//    }
+//
+//    private fun getItemsAddedToday() {
+//        workerHomeViewModel.getItemsAddedToday(CommonUtils.getCurrentDate())
+//            .observe(viewLifecycleOwner) {
+//                Log.i("WORKER_HOME_INFORMATION", it.toString())
+//                binding.tvTotalStockItemInADay.text = it.toString()
+//            }
+//    }
+//
+//    private fun getItemsOutToday() {
+//
+//        workerHomeViewModel.getItemsOutToday(CommonUtils.getCurrentDate())
+//
+//            .observe(viewLifecycleOwner) {
+//                Log.i("WORKER_HOME_INFORMATION", it.toString())
+//                binding.tvTotalStockItemOutADay.text = it.toString()
+//            }
+//
+//    }
+//
+//    private fun resetDatabase() {
+//        val application = requireActivity().application
+//        AppDatabase.resetDatabase(application)
+//        // After resetting the database, you might want to recreate the database and repopulate it if necessary
+//        val productDao = AppDatabase.getDatabase(application).productDao()
+//        val repository = ProductRepository(productDao)
+//        val viewModelFactory = ViewModelFactoryProduct(repository)
+//        workerHomeViewModel = ViewModelProvider(this, viewModelFactory)[WorkerHomeViewModel::class.java]
+//        // Re-fetch data or handle UI updates here
+//    }
 
 
 }

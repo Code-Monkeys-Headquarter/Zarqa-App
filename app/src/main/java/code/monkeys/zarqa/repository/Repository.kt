@@ -12,38 +12,41 @@ import java.util.concurrent.Executors
 class Repository(application: Application) {
 
     private val apiService: ApiService = ApiConfig.getApiService()
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
     suspend fun login(email: String, password: String): LoginResponse {
-        return try {
-            val response = apiService.postLogin(email, password).awaitResponse()
-            if (response.isSuccessful) {
-                response.body()!!
-            } else {
-                throw Exception("Login failed")
-            }
-
-        } catch (e: Exception) {
-            throw e
+        val response = apiService.postLogin(email, password)
+        if (response.isSuccessful) {
+            return response.body()!!
+        } else {
+            throw Exception("Login Failed")
         }
     }
 
     suspend fun register(
         name: String,
         outlet_name: String,
+        phone: String,
         email: String,
         password: String,
         role: String
     ): RegisterResponse {
-        return try {
-            val response = apiService.postRegister(name, outlet_name, email, password, role).awaitResponse()
-            if (response.isSuccessful) {
-                response.body()!!
-            } else {
-                throw Exception("Register failed")
-            }
-        } catch (e: Exception) {
-            throw e
+//        return try {
+//            val response =
+//                apiService.postRegister(name, outlet_name, email, password, role).awaitResponse()
+//            if (response.isSuccessful) {
+//                response.body()!!
+//            } else {
+//                throw Exception("Register failed")
+//            }
+//        } catch (e: Exception) {
+//            throw e
+//        }
+
+        val response = apiService.postRegister(name, outlet_name, phone, email, password, role)
+        if (response.isSuccessful) {
+            return response.body()!!
+        } else {
+            throw Exception("Register Failed")
         }
     }
 

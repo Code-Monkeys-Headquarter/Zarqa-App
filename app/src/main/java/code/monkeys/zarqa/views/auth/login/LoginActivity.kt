@@ -1,15 +1,16 @@
 package code.monkeys.zarqa.views.auth.login
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivityLoginBinding
 import code.monkeys.zarqa.repository.Repository
@@ -18,13 +19,13 @@ import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.admin.AdminActivity
 import code.monkeys.zarqa.views.auth.register.RegisterActivity
 import code.monkeys.zarqa.views.dropshipper.DropshipperActivity
-import code.monkeys.zarqa.views.main.MainActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -36,6 +37,35 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        loginViewModel = ViewModelProvider(
+            this, ViewModelFactory(Repository(Application())))[LoginViewModel::class.java]
+
+        loginViewModel.loginResponse.observe(this) { response ->
+
+            response?.let {
+                hideLoading()
+                when (it.data.role) {
+                    "admin" -> navigateToAdminActivity()
+                    "dropshipper" -> navigateToDropshipperActivity()
+                    "gudang" -> navigateToWorkerActivity()
+                    else -> CommonUtils.showToast(this, "Role tidak ditemukan😂")
+                }
+
+                val token = it.data.token
+                CommonUtils.showToast(this, "Token Role ${it.data.role} : $token")
+            }
+
+        }
+
+        loginViewModel.error.observe(this) { errorMessage ->
+            errorMessage?.let {
+                hideLoading()
+                CommonUtils.showToast(this, it)
+            }
+        }
+
+
         binding.apply {
             btnCreateNewAccount.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
@@ -47,9 +77,8 @@ class LoginActivity : AppCompatActivity() {
                 val password = edtPassword.text.toString().trim()
 
                 if (validateInput(email, password)) {
-                    startActivity(Intent(this@LoginActivity, WorkerActivity::class.java))
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-                    finish()
+                    showLoading()
+                    loginViewModel.login(email, password)
                 } else {
                     Toast.makeText(this@LoginActivity, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
@@ -65,12 +94,47 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
 
-
-
-        if (password.length < 5) {
-            CommonUtils.showToast(this@LoginActivity, "Password minimal 5 karakter")
+        if (password.length < 8) {
+            CommonUtils.showToast(this@LoginActivity, "Password minimal 8 karakter")
             return false
         }
         return true
     }
+
+    private fun navigateToWorkerActivity() {
+        startActivity(Intent(this@LoginActivity, WorkerActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToDropshipperActivity() {
+        startActivity(Intent(this@LoginActivity, DropshipperActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToAdminActivity() {
+        startActivity(Intent(this@LoginActivity, AdminActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLoading() {
+        binding.apply {
+            btnLogin.isEnabled = false
+            btnLogin.text = "Loading....."
+            btnLogin.setTextColor(ContextCompat.getColor(this@LoginActivity, android.R.color.white))
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            btnLogin.isEnabled = true
+            btnLogin.text = getString(R.string.login)
+            btnLogin.setTextColor(ContextCompat.getColor(this@LoginActivity, android.R.color.white))
+        }
+    }
+
 }

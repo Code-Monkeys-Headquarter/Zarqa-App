@@ -17,18 +17,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
-import code.monkeys.zarqa.data.source.local.database.AppDatabase
 import code.monkeys.zarqa.data.source.local.entity.Product
 import code.monkeys.zarqa.databinding.ActivityAddProductBinding
 import code.monkeys.zarqa.utils.CommonUtils
-import code.monkeys.zarqa.utils.Tools
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import java.sql.Date
 
 class AddProductActivity : AppCompatActivity() {
 
@@ -51,13 +47,6 @@ class AddProductActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val application = requireNotNull(this).application
-        val productDao = AppDatabase.getDatabase(application).productDao()
-        val repository = ProductRepository(productDao)
-        val viewModelFactory = ViewModelFactoryProduct(repository)
-        productViewModel =
-            ViewModelProvider(this, viewModelFactory)[AddProductViewModel::class.java]
 
 
 //        Permission All Granted Handle
@@ -93,39 +82,39 @@ class AddProductActivity : AppCompatActivity() {
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
                 val dateAdded = CommonUtils.getCurrentDate()
 
-                if (validateInput(productName, price, color, totalStock, lowStockAlert, size)) {
-                    val product = Product(
-                        productName = productName,
-                        productPrice = price,
-                        productColor = color,
-                        productTotalStock = totalStock,
-                        productLowStockAlert = lowStockAlert,
-                        size = size,
-                        productImage = productImageUri,
-                        dateAdded = dateAdded
-                    )
-                    lifecycleScope.launch {
-                        try {
-                            productViewModel.insertProduct(product)
-                            Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
-                                .show()
-                        } catch (e: Exception) {
-                            Log.e("LOG_ERROR", e.toString())
-                        }
-
-                    }
-                }
+//                if (validateInput(productName, price, color, totalStock, lowStockAlert, size)) {
+//                    val product = Product(
+//                        productName = productName,
+//                        productPrice = price,
+//                        productColor = color,
+//                        productTotalStock = totalStock,
+//                        productLowStockAlert = lowStockAlert,
+//                        size = size,
+//                        productImage = productImageUri,
+//                        dateAdded = dateAdded
+//                    )
+//                    lifecycleScope.launch {
+//                        try {
+//                            productViewModel.insertProduct(product)
+//                            Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
+//                                .show()
+//                        } catch (e: Exception) {
+//                            Log.e("LOG_ERROR", e.toString())
+//                        }
+//
+//                    }
+//                }
             }
         }
 
-        productViewModel.lowStockProducts.observe(this@AddProductActivity) {
-            it?.forEach { lowStockProduct ->
-                Log.d(
-                    "LOW_STOCK",
-                    "Low Stock Product: ${lowStockProduct.productName}, Stock: ${lowStockProduct.productTotalStock}"
-                )
-            }
-        }
+//        productViewModel.lowStockProducts.observe(this@AddProductActivity) {
+//            it?.forEach { lowStockProduct ->
+//                Log.d(
+//                    "LOW_STOCK",
+//                    "Low Stock Product: ${lowStockProduct.productName}, Stock: ${lowStockProduct.productTotalStock}"
+//                )
+//            }
+//        }
 
 
     }

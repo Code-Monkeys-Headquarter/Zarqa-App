@@ -14,6 +14,7 @@ import code.monkeys.zarqa.databinding.ActivitySplashBinding
 import code.monkeys.zarqa.views.auth.login.LoginActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
 
+@Suppress("DEPRECATION")
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
