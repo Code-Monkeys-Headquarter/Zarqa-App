@@ -53,29 +53,19 @@
                 android:textColor="@color/grey"
                 android:textSize="14sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edt_role"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <EditText
+                android:id="@+id/edt_shop_name"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
-                android:hint="@string/role"
+                android:hint="Nama Toko"
                 android:inputType="text"
                 android:maxLines="1"
+                android:fontFamily="@font/gilroy_medium"
                 android:singleLine="true"
-                tools:ignore="TextFields">
-
-                <AutoCompleteTextView
-                    android:id="@+id/edt_role_item"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/gilroy_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="none"
-                    android:maxLines="1" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:textSize="15sp"
+                tools:ignore="TextFields" />
 
             <EditText
                 android:id="@+id/edt_fullname"

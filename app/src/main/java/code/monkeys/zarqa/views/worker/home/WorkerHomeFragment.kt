@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.data.source.local.database.AppDatabase
 import code.monkeys.zarqa.databinding.FragmentWorkerHomeBinding
-import code.monkeys.zarqa.repository.ProductRepository
 import code.monkeys.zarqa.utils.CommonUtils
-import code.monkeys.zarqa.utils.ViewModelFactoryProduct
 import kotlinx.coroutines.launch
 
 class WorkerHomeFragment : Fragment() {

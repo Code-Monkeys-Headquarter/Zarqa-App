@@ -20,10 +20,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private val registerViewModel: RegisterViewModel by viewModels {
-        ViewModelFactory(Repository(applicationContext))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -38,14 +34,13 @@ class RegisterActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, R.layout.list_item_role, items)
 
         binding.apply {
-            edtRoleItem.setAdapter(adapter)
             btnRegister.setOnClickListener {
                 val edtEmail = edtEmail.text.toString()
                 val edtPassword = edtPassword.text.toString()
-                val edtRole = edtRoleItem.text.toString()
+                val edtShopName = edtShopName.text.toString()
                 val edtFullname = edtFullname.text.toString()
 
-                if (validateInput(edtFullname, edtEmail, edtPassword, edtRole)) {
+                if (validateInput(edtShopName, edtFullname, edtEmail, edtPassword)) {
                     startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                     finish()
@@ -62,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun validateInput(
         email: String,
         password: String,
-        role: String,
+        shopName: String,
         fullname: String
     ): Boolean {
         if (email.isEmpty() || password.isEmpty() || fullname.isEmpty()) {
@@ -70,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
             return false
         }
 
-        if (role.isEmpty()) {
+        if (shopName.isEmpty()) {
             CommonUtils.showToast(this@RegisterActivity, "Silahkan pilih role")
             return false
         }

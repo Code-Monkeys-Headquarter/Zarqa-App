@@ -25,9 +25,6 @@ import code.monkeys.zarqa.views.worker.WorkerActivity
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels {
-        ViewModelFactory(Repository(applicationContext))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityLoginBinding.inflate(layoutInflater)

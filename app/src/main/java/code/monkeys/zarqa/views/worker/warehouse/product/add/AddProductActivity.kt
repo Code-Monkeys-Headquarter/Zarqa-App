@@ -23,10 +23,8 @@ import code.monkeys.zarqa.R
 import code.monkeys.zarqa.data.source.local.database.AppDatabase
 import code.monkeys.zarqa.data.source.local.entity.Product
 import code.monkeys.zarqa.databinding.ActivityAddProductBinding
-import code.monkeys.zarqa.repository.ProductRepository
 import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.Tools
-import code.monkeys.zarqa.utils.ViewModelFactoryProduct
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
