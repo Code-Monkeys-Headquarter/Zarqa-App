@@ -9,15 +9,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivitySplashBinding
+import code.monkeys.zarqa.utils.DataStoreManager
+import code.monkeys.zarqa.views.admin.AdminActivity
 import code.monkeys.zarqa.views.auth.login.LoginActivity
+import code.monkeys.zarqa.views.dropshipper.DropshipperActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -30,11 +37,61 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
+        dataStoreManager = DataStoreManager.getInstance(this)
+
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            finish()
+            checkLoginStatus()
         }, 2000)
 
+    }
+
+    private fun checkLoginStatus() {
+
+        lifecycleScope.launch {
+            val token = dataStoreManager.tokenFlow.first()
+            val role = dataStoreManager.roleFlow.first()
+
+            if (token != null && role != null) {
+                navitageToAppropriatePage(role)
+            } else {
+                navigateToLoginPage()
+            }
+
+        }
+
+    }
+
+    private fun navitageToAppropriatePage(role: String) {
+        when (role) {
+            "admin" -> navigateToAdminActivity()
+            "dropshipper" -> navigateToDropshipperActivity()
+            "gudang" -> navigateToWorkerActivity()
+            else -> navigateToLoginPage()
+        }
+        finish()
+    }
+
+    private fun navigateToWorkerActivity() {
+        startActivity(Intent(this, WorkerActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToDropshipperActivity() {
+        startActivity(Intent(this, DropshipperActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToAdminActivity() {
+        startActivity(Intent(this, AdminActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
+    }
+
+    private fun navigateToLoginPage() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        finish()
     }
 }

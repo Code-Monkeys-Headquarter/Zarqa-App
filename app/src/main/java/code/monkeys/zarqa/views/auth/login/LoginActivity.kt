@@ -11,21 +11,25 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivityLoginBinding
 import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.utils.CommonUtils
+import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.admin.AdminActivity
 import code.monkeys.zarqa.views.auth.register.RegisterActivity
 import code.monkeys.zarqa.views.dropshipper.DropshipperActivity
 import code.monkeys.zarqa.views.worker.WorkerActivity
+import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -38,11 +42,13 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        dataStoreManager = DataStoreManager.getInstance(this)
+
         loginViewModel = ViewModelProvider(
-            this, ViewModelFactory(Repository(Application())))[LoginViewModel::class.java]
+            this, ViewModelFactory(Repository(Application()))
+        )[LoginViewModel::class.java]
 
         loginViewModel.loginResponse.observe(this) { response ->
-
             response?.let {
                 hideLoading()
                 when (it.data.role) {
@@ -51,9 +57,10 @@ class LoginActivity : AppCompatActivity() {
                     "gudang" -> navigateToWorkerActivity()
                     else -> CommonUtils.showToast(this, "Role tidak ditemukan😂")
                 }
-
                 val token = it.data.token
-                CommonUtils.showToast(this, "Token Role ${it.data.role} : $token")
+                val role = it.data.role
+                saveToken(token)
+                saveRole(role)
             }
 
         }
@@ -79,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
                 if (validateInput(email, password)) {
                     showLoading()
                     loginViewModel.login(email, password)
+
                 } else {
                     Toast.makeText(this@LoginActivity, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
@@ -134,6 +142,18 @@ class LoginActivity : AppCompatActivity() {
             btnLogin.isEnabled = true
             btnLogin.text = getString(R.string.login)
             btnLogin.setTextColor(ContextCompat.getColor(this@LoginActivity, android.R.color.white))
+        }
+    }
+
+    private fun saveToken(token: String) {
+        lifecycleScope.launch {
+            dataStoreManager.saveToken(token)
+        }
+    }
+
+    private fun saveRole(role: String) {
+        lifecycleScope.launch {
+            dataStoreManager.saveRole(role)
         }
     }
 

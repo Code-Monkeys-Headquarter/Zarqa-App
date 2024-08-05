@@ -104,6 +104,9 @@ dependencies {
     // Tab layout
     implementation(libs.androidx.viewpager2)
 
+    // Data Store
+    implementation (libs.androidx.datastore.preferences)
+
     // Camera X
     val cameraXversion = "1.2.2"
     implementation("androidx.camera:camera-core:$cameraXversion")
