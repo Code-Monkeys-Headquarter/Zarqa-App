@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".views.worker.warehouse.product.add.AddProductActivity">
 
+
         <!--  Title and Back Button  -->
         <LinearLayout
             android:id="@+id/linear_layout_dashboard_and_title"

@@ -20,7 +20,6 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.data.source.remote.request.product.Product
 import code.monkeys.zarqa.data.source.remote.request.product.ProductType
@@ -30,7 +29,6 @@ import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
-import kotlinx.coroutines.launch
 
 class AddProductActivity : AppCompatActivity() {
 
@@ -112,7 +110,6 @@ class AddProductActivity : AppCompatActivity() {
                 val lowStockAlert = edtProductRangeLowStock.text.toString().toInt()
                 val size = getSelectedSize()
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
-                val dateAdded = CommonUtils.getCurrentDate()
 
                 if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
                     val productType = ProductType(size, price, totalStock)
@@ -122,9 +119,8 @@ class AddProductActivity : AppCompatActivity() {
                         color = color,
                         productType = listOf(productType)
                     )
-
+                    showLoading()
                     val token = CommonUtils.showToken(this@AddProductActivity)
-
                     productViewModel.addProduct(token, product)
                 }
             }
@@ -132,8 +128,10 @@ class AddProductActivity : AppCompatActivity() {
 
         productViewModel.addProductResult.observe(this) { result ->
             result.onSuccess {
+                hideLoading()
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             }.onFailure {
+                hideLoading()
                 Toast.makeText(this, "Failed to add product", Toast.LENGTH_SHORT).show()
                 Log.e("AddProductActivity", "Failed to add product", it)
             }
@@ -225,6 +223,36 @@ class AddProductActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLoading() {
+        binding.apply {
+            btnSave.isEnabled = false
+            btnSave.text = "Loading....."
+            btnSave.setBackgroundColor(ContextCompat.getColor(this@AddProductActivity, android.R.color.darker_gray))
+            btnSave.setTextColor(
+                ContextCompat.getColor(
+                    this@AddProductActivity,
+                    android.R.color.white
+                )
+            )
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun hideLoading() {
+        binding.apply {
+            btnSave.isEnabled = true
+            btnSave.text = "Simpan"
+            btnSave.setBackgroundColor(ContextCompat.getColor(this@AddProductActivity, android.R.color.black))
+            btnSave.setTextColor(
+                ContextCompat.getColor(
+                    this@AddProductActivity,
+                    android.R.color.white
+                )
+            )
+        }
     }
 
 
