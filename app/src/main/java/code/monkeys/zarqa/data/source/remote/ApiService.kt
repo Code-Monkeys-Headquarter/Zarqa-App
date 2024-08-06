@@ -1,8 +1,10 @@
 package code.monkeys.zarqa.data.source.remote
 
+import code.monkeys.zarqa.data.source.remote.request.product.Product
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
@@ -28,13 +30,19 @@ interface ApiService {
         @Field("role") role: String
     ): Response<RegisterResponse>
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("product")
+//    suspend fun addProduct(
+//        @Header("Authorization") token: String,
+//        @Field("name") name: String,
+//        @Field("images") images: String,  // Converted to String
+//        @Field("color") color: String,
+//        @Field("productType") productType: String  // Converted to String
+//    ): Response<Any>
+
     @POST("product")
     suspend fun addProduct(
-        @Header("Authorization") token: String,
-        @Field("name") name: String,
-        @Field("images") images: String,  // Converted to String
-        @Field("color") color: String,
-        @Field("productType") productType: String  // Converted to String
-    ): Response<Any>
+        @Header ("Authorization") token: String,
+        @Body product: Product
+    ): Response<Unit>
 }

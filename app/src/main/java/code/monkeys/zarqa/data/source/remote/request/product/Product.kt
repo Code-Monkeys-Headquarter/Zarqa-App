@@ -1,15 +1,16 @@
 package code.monkeys.zarqa.data.source.remote.request.product
 
+import com.google.gson.annotations.SerializedName
+
 data class Product(
-    val name: String,
-    val images: List<String>,
-    val color: String,
-    val productType: List<ProductType>
+    @SerializedName("name") val name: String,
+    @SerializedName("images") val images: List<String>,
+    @SerializedName("color") val color: String,
+    @SerializedName("productType") val productType: List<ProductType>
 )
 
 data class ProductType(
-    val size: String,
-    val price: Int,
-    val stock: Int,
-    val lowStockAlert: Int
+    @SerializedName("size") val size: String,
+    @SerializedName("price") val price: Int,
+    @SerializedName("stock") val stock: Int
 )

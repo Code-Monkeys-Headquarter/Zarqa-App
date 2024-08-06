@@ -4,24 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import code.monkeys.zarqa.data.source.remote.request.product.Product
 import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.repository.Repository
 import kotlinx.coroutines.launch
 
 class AddProductViewModel(private val repository: Repository) : ViewModel() {
-    private val _addProductResult = MutableLiveData<Result<Any>>()
-    val addProductResult: LiveData<Result<Any>> get() = _addProductResult
+    private val _addProductResult = MutableLiveData<Result<Unit>>()
+    val addProductResult: LiveData<Result<Unit>> get() = _addProductResult
 
-    fun addProduct(
-        token: String,
-        name: String,
-        images: List<String>,
-        color: String,
-        productType: ProductType
-    ) {
+    fun addProduct(token: String, product: Product) {
         viewModelScope.launch {
-            val tokenBearer = "Bearer $token"
-            val result = repository.addProduct(tokenBearer, name, images, color, productType)
+            val result = repository.addProduct(token, product)
             _addProductResult.value = result
         }
     }

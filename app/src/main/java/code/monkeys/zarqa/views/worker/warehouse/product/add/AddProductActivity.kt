@@ -1,6 +1,7 @@
 package code.monkeys.zarqa.views.worker.warehouse.product.add
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
+import code.monkeys.zarqa.data.source.remote.request.product.Product
 import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.databinding.ActivityAddProductBinding
 import code.monkeys.zarqa.repository.Repository
@@ -43,6 +45,7 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var productViewModel: AddProductViewModel
     private lateinit var dataStoreManager: DataStoreManager
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAddProductBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -91,8 +94,16 @@ class AddProductActivity : AppCompatActivity() {
                 )
             }
 
-//            Save Product Button and Validation for Input User
-            // Save Product Button and Validation for Input User
+            tvTitle.setOnClickListener {
+                edtProductName.setText("Anjay")
+                edtProductPrice.setText("100000")
+                edtProductColor.setText("Red")
+                edtProductQuantity.setText("10")
+                edtProductRangeLowStock.setText("5")
+                rbSizeL.text = "L"
+                listOf(currentImageUri.toString())
+
+            }
             btnSave.setOnClickListener {
                 val name = edtProductName.text.toString().trim()
                 val price = edtProductPrice.text.toString().toInt()
@@ -104,27 +115,24 @@ class AddProductActivity : AppCompatActivity() {
                 val dateAdded = CommonUtils.getCurrentDate()
 
                 if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
-                    val productType = ProductType(size, price, totalStock, lowStockAlert)
-                    val images = listOf(productImageUri)
+                    val productType = ProductType(size, price, totalStock)
+                    val product = Product(
+                        name,
+                        listOf(productImageUri),
+                        color = color,
+                        productType = listOf(productType)
+                    )
 
                     val token = CommonUtils.showToken(this@AddProductActivity)
 
-                    lifecycleScope.launch {
-                        productViewModel.addProduct(
-                            token,
-                            name,
-                            images,
-                            color,
-                            productType
-                        )
-                    }
+                    productViewModel.addProduct(token, product)
                 }
             }
         }
 
         productViewModel.addProductResult.observe(this) { result ->
             result.onSuccess {
-                Toast.makeText(this, "Product added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
             }.onFailure {
                 Toast.makeText(this, "Failed to add product", Toast.LENGTH_SHORT).show()
                 Log.e("AddProductActivity", "Failed to add product", it)

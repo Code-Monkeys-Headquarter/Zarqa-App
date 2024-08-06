@@ -49,7 +49,7 @@
     <string name="worker_warehouse_tab_layout_title2">Stok Rendah</string>
     <string name="worker_warehouse_tab_layout_title3">Hapus Produk</string>
 
-    <!-- Worker Product -->
+    <!-- Worker code.monkeys.zarqa.data.source.remote.request.product.Product -->
     <string name="worker_product_add_product_title">Tambah Produk</string>
     <string name="worker_product_add_product_image_title">Gambar Produk</string>
     <string name="worker_product_add_product_information_title">Informasi Produk</string>
@@ -57,7 +57,7 @@
     <string name="worker_product_take_product_title">Ambil Produk</string>
 
 
-    <!-- Search Product -->
+    <!-- Search code.monkeys.zarqa.data.source.remote.request.product.Product -->
     <string name="search_product_hint">Cari produk disini</string>
 
 

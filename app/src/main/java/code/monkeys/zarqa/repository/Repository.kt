@@ -1,12 +1,16 @@
 package code.monkeys.zarqa.repository
 
 import android.app.Application
+import android.util.Log
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
+import code.monkeys.zarqa.data.source.remote.request.product.Product
 import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class Repository(application: Application) {
 
@@ -37,28 +41,34 @@ class Repository(application: Application) {
             throw Exception("Register Failed")
         }
     }
-
-    suspend fun addProduct(
-        token: String,
-        name: String,
-        images: List<String>,
-        color: String,
-        productType: ProductType
-    ): Result<Any> {
-        return try {
-            val gson = Gson()
-            val imagesJson = gson.toJson(images)
-            val productTypeJson = gson.toJson(productType)
-
-            val response = apiService.addProduct(token, name, imagesJson, color, productTypeJson)
-            if (response.isSuccessful) {
-                Result.success(response.body()!!)
-            } else {
-                Result.failure(Throwable(response.message()))
+    suspend fun addProduct(token: String, product: Product): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.addProduct(token, product)
+                if (response.isSuccessful) {
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Throwable(response.message()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
             }
-        } catch (e: Exception) {
-            Result.failure(e)
         }
     }
+
+
+//    suspend fun addProduct(): Result<Any> {
+//        return try {
+//
+//            val response = apiService.addProduct(token, name, images, color, productTypeJson)
+//            if (response.isSuccessful) {
+//                Result.success(response.body()!!)
+//            } else {
+//                Result.failure(Throwable(response.message()))
+//            }
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        }
+//    }
 
 }
