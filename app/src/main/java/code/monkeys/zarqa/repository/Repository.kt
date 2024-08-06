@@ -3,11 +3,10 @@ package code.monkeys.zarqa.repository
 import android.app.Application
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
+import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
-import retrofit2.awaitResponse
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import com.google.gson.Gson
 
 class Repository(application: Application) {
 
@@ -30,23 +29,35 @@ class Repository(application: Application) {
         password: String,
         role: String
     ): RegisterResponse {
-//        return try {
-//            val response =
-//                apiService.postRegister(name, outlet_name, email, password, role).awaitResponse()
-//            if (response.isSuccessful) {
-//                response.body()!!
-//            } else {
-//                throw Exception("Register failed")
-//            }
-//        } catch (e: Exception) {
-//            throw e
-//        }
 
         val response = apiService.postRegister(name, outlet_name, phone, email, password, role)
         if (response.isSuccessful) {
             return response.body()!!
         } else {
             throw Exception("Register Failed")
+        }
+    }
+
+    suspend fun addProduct(
+        token: String,
+        name: String,
+        images: List<String>,
+        color: String,
+        productType: ProductType
+    ): Result<Any> {
+        return try {
+            val gson = Gson()
+            val imagesJson = gson.toJson(images)
+            val productTypeJson = gson.toJson(productType)
+
+            val response = apiService.addProduct(token, name, imagesJson, color, productTypeJson)
+            if (response.isSuccessful) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Throwable(response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 

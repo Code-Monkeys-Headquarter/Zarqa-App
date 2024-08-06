@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.asLiveData
 import com.airbnb.lottie.LottieAnimationView
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -30,6 +33,13 @@ object CommonUtils {
         view.setBackgroundColor(Color.parseColor("#80000000"))
         lottieLoading.visibility = View.VISIBLE
         lottieLoading.playAnimation()
+    }
+
+    fun showToken(context: Context): String {
+        val dataStoreManager = DataStoreManager.getInstance(context)
+        return runBlocking {
+            dataStoreManager.tokenFlow.first() ?: ""
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package code.monkeys.zarqa.views.worker.warehouse.product.add
 
 import android.Manifest
+import android.app.Application
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -17,25 +18,30 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import code.monkeys.zarqa.R
-import code.monkeys.zarqa.data.source.local.entity.Product
+import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.databinding.ActivityAddProductBinding
+import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.utils.CommonUtils
+import code.monkeys.zarqa.utils.DataStoreManager
+import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class AddProductActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUIRED_PERMISSION_CAMERA = Manifest.permission.CAMERA
-        private const val DEFAULT_IMAGE_URI = "android.resource://code.monkeys.zarqa/drawable/product_image_default"
+        private const val DEFAULT_IMAGE_URI =
+            "android.resource://code.monkeys.zarqa/drawable/product_image_default"
     }
 
     private lateinit var binding: ActivityAddProductBinding
     private var currentImageUri: Uri? = null
     private lateinit var productViewModel: AddProductViewModel
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAddProductBinding.inflate(layoutInflater)
@@ -47,6 +53,13 @@ class AddProductActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        dataStoreManager = DataStoreManager.getInstance(this@AddProductActivity)
+
+        productViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(Repository(Application()))
+        )[AddProductViewModel::class.java]
 
 
 //        Permission All Granted Handle
@@ -71,50 +84,52 @@ class AddProductActivity : AppCompatActivity() {
                 startCameraX()
             }
 
+            tvTitle.setOnClickListener {
+                CommonUtils.showToast(
+                    this@AddProductActivity,
+                    CommonUtils.showToken(this@AddProductActivity)
+                )
+            }
+
 //            Save Product Button and Validation for Input User
+            // Save Product Button and Validation for Input User
             btnSave.setOnClickListener {
-                val productName = edtProductName.text.toString().trim()
-                val price = edtProductPrice.text.toString().toIntOrNull() ?: 0
+                val name = edtProductName.text.toString().trim()
+                val price = edtProductPrice.text.toString().toInt()
                 val color = edtProductColor.text.toString().trim()
-                val totalStock = edtProductQuantity.text.toString().toIntOrNull() ?: 0
-                val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
+                val totalStock = edtProductQuantity.text.toString().toInt()
+                val lowStockAlert = edtProductRangeLowStock.text.toString().toInt()
                 val size = getSelectedSize()
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
                 val dateAdded = CommonUtils.getCurrentDate()
 
-//                if (validateInput(productName, price, color, totalStock, lowStockAlert, size)) {
-//                    val product = Product(
-//                        productName = productName,
-//                        productPrice = price,
-//                        productColor = color,
-//                        productTotalStock = totalStock,
-//                        productLowStockAlert = lowStockAlert,
-//                        size = size,
-//                        productImage = productImageUri,
-//                        dateAdded = dateAdded
-//                    )
-//                    lifecycleScope.launch {
-//                        try {
-//                            productViewModel.insertProduct(product)
-//                            Snackbar.make(it, "Barang sudah disimpan ke Gudang😁🙏", Snackbar.LENGTH_SHORT)
-//                                .show()
-//                        } catch (e: Exception) {
-//                            Log.e("LOG_ERROR", e.toString())
-//                        }
-//
-//                    }
-//                }
+                if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
+                    val productType = ProductType(size, price, totalStock, lowStockAlert)
+                    val images = listOf(productImageUri)
+
+                    val token = CommonUtils.showToken(this@AddProductActivity)
+
+                    lifecycleScope.launch {
+                        productViewModel.addProduct(
+                            token,
+                            name,
+                            images,
+                            color,
+                            productType
+                        )
+                    }
+                }
             }
         }
 
-//        productViewModel.lowStockProducts.observe(this@AddProductActivity) {
-//            it?.forEach { lowStockProduct ->
-//                Log.d(
-//                    "LOW_STOCK",
-//                    "Low Stock Product: ${lowStockProduct.productName}, Stock: ${lowStockProduct.productTotalStock}"
-//                )
-//            }
-//        }
+        productViewModel.addProductResult.observe(this) { result ->
+            result.onSuccess {
+                Toast.makeText(this, "Product added successfully", Toast.LENGTH_SHORT).show()
+            }.onFailure {
+                Toast.makeText(this, "Failed to add product", Toast.LENGTH_SHORT).show()
+                Log.e("AddProductActivity", "Failed to add product", it)
+            }
+        }
 
 
     }
@@ -197,14 +212,12 @@ class AddProductActivity : AppCompatActivity() {
         if (productName.isEmpty() || price <= 0 || color.isEmpty() || totalStock <= 0 || lowStockAlert <= 0 || size.isEmpty()) {
             CommonUtils.showToast(
                 this@AddProductActivity,
-                "Silahkan isi semua data atau Periksa data dengan benar"
+                "Please fill in all the fields correctly"
             )
             return false
         }
         return true
     }
-
-
 
 
 }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -115,6 +116,10 @@ dependencies {
     implementation("androidx.camera:camera-video:$cameraXversion")
     implementation("androidx.camera:camera-view:$cameraXversion")
     implementation("androidx.camera:camera-extensions:$cameraXversion")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation("com.google.firebase:firebase-analytics")
 
 
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +46,8 @@ class LoginActivity : AppCompatActivity() {
         dataStoreManager = DataStoreManager.getInstance(this)
 
         loginViewModel = ViewModelProvider(
-            this, ViewModelFactory(Repository(Application()))
+            this,
+            ViewModelFactory(Repository(Application()))
         )[LoginViewModel::class.java]
 
         loginViewModel.loginResponse.observe(this) { response ->
@@ -59,6 +61,8 @@ class LoginActivity : AppCompatActivity() {
                 }
                 val token = it.data.token
                 val role = it.data.role
+                Log.i("TOKEN", "Token : $token")
+
                 saveToken(token)
                 saveRole(role)
             }

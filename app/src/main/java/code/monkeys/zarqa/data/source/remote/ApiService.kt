@@ -5,6 +5,7 @@ import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 
@@ -26,4 +27,14 @@ interface ApiService {
         @Field("password") password: String,
         @Field("role") role: String
     ): Response<RegisterResponse>
+
+    @FormUrlEncoded
+    @POST("product")
+    suspend fun addProduct(
+        @Header("Authorization") token: String,
+        @Field("name") name: String,
+        @Field("images") images: String,  // Converted to String
+        @Field("color") color: String,
+        @Field("productType") productType: String  // Converted to String
+    ): Response<Any>
 }

@@ -37,8 +37,8 @@
     <string name="worker_home_title_dashboard">Dashboard</string>
     <string name="worker_dashboard_total_stock">Jumlah Barang</string>
     <string name="worker_dashboard_total_value">Value Barang</string>
-    <string name="worker_dashboard_stock_in_a_day">Barang Masuk Hari Ini</string>
-    <string name="worker_dashboard_stock_out_a_day">Barang Keluar Hari Ini</string>
+    <string name="worker_dashboard_stock_in_a_day">Stok Masuk Hari Ini</string>
+    <string name="worker_dashboard_stock_out_a_day">Stok Keluar Hari Ini</string>
     <string name="worker_dahsboard_stock_in">In</string>
     <string name="worker_dahsboard_stock_out">Out</string>
     <string name="worker_warehouse_title_warehouse">Gudang</string>
@@ -53,6 +53,12 @@
     <string name="worker_product_add_product_title">Tambah Produk</string>
     <string name="worker_product_add_product_image_title">Gambar Produk</string>
     <string name="worker_product_add_product_information_title">Informasi Produk</string>
+
+    <string name="worker_product_take_product_title">Ambil Produk</string>
+
+
+    <!-- Search Product -->
+    <string name="search_product_hint">Cari produk disini</string>
 
 
 </resources>

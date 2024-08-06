@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "902424286325",
+    "project_id": "zarqa-app",
+    "storage_bucket": "zarqa-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902424286325:android:99cf8cef2ebe4b461d143c",
+        "android_client_info": {
+          "package_name": "code.monkeys.zarqa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAni56FlJeA9Rz2poBQ10RqEZGc-gYh7iM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

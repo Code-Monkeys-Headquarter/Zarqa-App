@@ -19,5 +19,7 @@
     <color name="dark_red">#E4003A</color>
     <color name="soft_red">#EF5A6F</color>
 
+    <color name="dashboard_menu_3">#80B3FF</color>
+
     <color name="tosca">#2CD3E1</color>
 </resources>
