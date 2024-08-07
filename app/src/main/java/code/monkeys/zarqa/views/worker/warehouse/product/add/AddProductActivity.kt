@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -103,26 +104,7 @@ class AddProductActivity : AppCompatActivity() {
 
             }
             btnSave.setOnClickListener {
-                val name = edtProductName.text.toString().trim()
-                val price = edtProductPrice.text.toString().toInt()
-                val color = edtProductColor.text.toString().trim()
-                val totalStock = edtProductQuantity.text.toString().toInt()
-                val lowStockAlert = edtProductRangeLowStock.text.toString().toInt()
-                val size = getSelectedSize()
-                val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
-
-                if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
-                    val productType = ProductType(size, price, totalStock)
-                    val product = Product(
-                        name,
-                        listOf(productImageUri),
-                        color = color,
-                        productType = listOf(productType)
-                    )
-                    showLoading()
-                    val token = CommonUtils.showToken(this@AddProductActivity)
-                    productViewModel.addProduct(token, product)
-                }
+                showConfirmationDialog()
             }
         }
 
@@ -230,7 +212,12 @@ class AddProductActivity : AppCompatActivity() {
         binding.apply {
             btnSave.isEnabled = false
             btnSave.text = "Loading....."
-            btnSave.setBackgroundColor(ContextCompat.getColor(this@AddProductActivity, android.R.color.darker_gray))
+            btnSave.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@AddProductActivity,
+                    android.R.color.darker_gray
+                )
+            )
             btnSave.setTextColor(
                 ContextCompat.getColor(
                     this@AddProductActivity,
@@ -245,7 +232,12 @@ class AddProductActivity : AppCompatActivity() {
         binding.apply {
             btnSave.isEnabled = true
             btnSave.text = "Simpan"
-            btnSave.setBackgroundColor(ContextCompat.getColor(this@AddProductActivity, android.R.color.black))
+            btnSave.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@AddProductActivity,
+                    android.R.color.black
+                )
+            )
             btnSave.setTextColor(
                 ContextCompat.getColor(
                     this@AddProductActivity,
@@ -253,6 +245,47 @@ class AddProductActivity : AppCompatActivity() {
                 )
             )
         }
+    }
+
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Konfirmasi")
+        builder.setMessage("Apakah Anda yakin ingin menambahkan produk ini?")
+
+        builder.setPositiveButton("Ya") { dialog, _ ->
+//            Menampilkan Loading Sebelum Proses
+            showLoading()
+            binding.apply {
+                val name = edtProductName.text.toString().trim()
+                val price = edtProductPrice.text.toString().toInt()
+                val color = edtProductColor.text.toString().trim()
+                val totalStock = edtProductQuantity.text.toString().toInt()
+                val lowStockAlert = edtProductRangeLowStock.text.toString().toInt()
+                val size = getSelectedSize()
+                val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
+
+                if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
+                    val productType = ProductType(size, price, totalStock)
+                    val product = Product(
+                        name,
+                        listOf(productImageUri),
+                        color = color,
+                        productType = listOf(productType)
+                    )
+                    val token = CommonUtils.showToken(this@AddProductActivity)
+                    productViewModel.addProduct(token, product)
+                }
+            }
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Batal") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
     }
 
 
