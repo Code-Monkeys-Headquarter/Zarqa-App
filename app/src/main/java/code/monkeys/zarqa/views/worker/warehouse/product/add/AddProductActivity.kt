@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -74,10 +73,6 @@ class AddProductActivity : AppCompatActivity() {
                 finish()
             }
 
-            rbSizeL.setOnClickListener {
-                CommonUtils.showToast(this@AddProductActivity, "L")
-            }
-
             btnGallery.setOnClickListener {
                 startGallery()
             }
@@ -91,17 +86,6 @@ class AddProductActivity : AppCompatActivity() {
                     this@AddProductActivity,
                     CommonUtils.showToken(this@AddProductActivity)
                 )
-            }
-
-            tvTitle.setOnClickListener {
-                edtProductName.setText("Anjay")
-                edtProductPrice.setText("100000")
-                edtProductColor.setText("Red")
-                edtProductQuantity.setText("10")
-                edtProductRangeLowStock.setText("5")
-                rbSizeL.text = "L"
-                listOf(currentImageUri.toString())
-
             }
             btnSave.setOnClickListener {
                 showConfirmationDialog()
@@ -178,30 +162,17 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    //    Validation Input User
-    private fun getSelectedSize(): String {
-        val selectedId = binding.rbGroupSize.checkedRadioButtonId
-        return if (selectedId != -1) {
-            val radioButton: RadioButton = findViewById(selectedId)
-            radioButton.text.toString()
-        } else {
-            ""
-        }
-    }
-
     private fun validateInput(
         productName: String,
-        price: Int,
         color: String,
-        totalStock: Int,
         lowStockAlert: Int,
-        size: String
     ): Boolean {
-        if (productName.isEmpty() || price <= 0 || color.isEmpty() || totalStock <= 0 || lowStockAlert <= 0 || size.isEmpty()) {
+        if (productName.isEmpty() || color.isEmpty() || lowStockAlert <= 0) {
             CommonUtils.showToast(
                 this@AddProductActivity,
                 "Please fill in all the fields correctly"
             )
+            hideLoading()
             return false
         }
         return true
@@ -253,24 +224,58 @@ class AddProductActivity : AppCompatActivity() {
         builder.setMessage("Apakah Anda yakin ingin menambahkan produk ini?")
 
         builder.setPositiveButton("Ya") { dialog, _ ->
-//            Menampilkan Loading Sebelum Proses
+            // Menampilkan Loading Sebelum Proses
             showLoading()
             binding.apply {
                 val name = edtProductName.text.toString().trim()
-                val price = edtProductPrice.text.toString().toInt()
                 val color = edtProductColor.text.toString().trim()
-                val totalStock = edtProductQuantity.text.toString().toInt()
-                val lowStockAlert = edtProductRangeLowStock.text.toString().toInt()
-                val size = getSelectedSize()
+                val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
 
-                if (validateInput(name, price, color, totalStock, lowStockAlert, size)) {
-                    val productType = ProductType(size, price, totalStock)
+                // Mengambil harga dan stok untuk setiap ukuran produk dengan default 0 jika tidak diisi
+                val sizeS = "S"
+                val pricesS = edtProductPriceS.text.toString().toIntOrNull() ?: 0
+                val stockS = edtProductStockS.text.toString().toIntOrNull() ?: 0
+
+                val sizeM = "M"
+                val pricesM = edtProductPriceM.text.toString().toIntOrNull() ?: 0
+                val stockM = edtProductStockM.text.toString().toIntOrNull() ?: 0
+
+                val sizeL = "L"
+                val pricesL = edtProductPriceL.text.toString().toIntOrNull() ?: 0
+                val stockL = edtProductStockL.text.toString().toIntOrNull() ?: 0
+
+                val sizeXL = "XL"
+                val pricesXL = edtProductPriceXl.text.toString().toIntOrNull() ?: 0
+                val stockXL = edtProductStockXl.text.toString().toIntOrNull() ?: 0
+
+                val sizeXXL = "XXL"
+                val pricesXXL = edtProductPriceXxl.text.toString().toIntOrNull() ?: 0
+                val stockXXL = edtProductStockXxl.text.toString().toIntOrNull() ?: 0
+
+                val sizeALL = "ALL"
+                val pricesALL = edtProductPriceAll.text.toString().toIntOrNull() ?: 0
+                val stockALL = edtProductStockAll.text.toString().toIntOrNull() ?: 0
+
+                if (validateInput(name, color, lowStockAlert)) {
+                    val productTypeS = ProductType(sizeS, pricesS, stockS)
+                    val productTypeM = ProductType(sizeM, pricesM, stockM)
+                    val productTypeL = ProductType(sizeL, pricesL, stockL)
+                    val productTypeXL = ProductType(sizeXL, pricesXL, stockXL)
+                    val productTypeXXL = ProductType(sizeXXL, pricesXXL, stockXXL)
+                    val productTypeALL = ProductType(sizeALL, pricesALL, stockALL)
                     val product = Product(
                         name,
                         listOf(productImageUri),
                         color = color,
-                        productType = listOf(productType)
+                        productType = listOf(
+                            productTypeS,
+                            productTypeM,
+                            productTypeL,
+                            productTypeXL,
+                            productTypeXXL,
+                            productTypeALL
+                        )
                     )
                     val token = CommonUtils.showToken(this@AddProductActivity)
                     productViewModel.addProduct(token, product)
@@ -285,8 +290,8 @@ class AddProductActivity : AppCompatActivity() {
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
-
     }
+
 
 
 }
