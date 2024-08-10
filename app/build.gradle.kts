@@ -121,6 +121,13 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-analytics")
 
+    // All:
+    implementation ("com.cloudinary:cloudinary-android:2.5.0")
+
+// Download + Preprocess:
+    implementation ("com.cloudinary:cloudinary-android-download:2.5.0")
+    implementation ("com.cloudinary:cloudinary-android-preprocess:2.5.0")
+
 
 
 

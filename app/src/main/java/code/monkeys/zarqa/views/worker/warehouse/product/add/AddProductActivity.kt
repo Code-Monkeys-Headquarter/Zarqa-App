@@ -29,6 +29,11 @@ import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.Companion.CAMERAX_RESULT
+import com.cloudinary.android.MediaManager
+import com.cloudinary.android.callback.ErrorInfo
+import com.cloudinary.android.callback.UploadCallback
+import java.io.File
+import java.io.FileOutputStream
 
 class AddProductActivity : AppCompatActivity() {
 
@@ -40,6 +45,8 @@ class AddProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddProductBinding
     private var currentImageUri: Uri? = null
+    private var filePathImage: String? = null
+    private var configCloudinary: HashMap<String, String> = HashMap()
     private lateinit var productViewModel: AddProductViewModel
     private lateinit var dataStoreManager: DataStoreManager
 
@@ -56,8 +63,16 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         dataStoreManager = DataStoreManager.getInstance(this@AddProductActivity)
+        productViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(Repository(Application()))
+        )[AddProductViewModel::class.java]
 
-        productViewModel = ViewModelProvider(this, ViewModelFactory(Repository(Application())))[AddProductViewModel::class.java]
+//        Cloudinary
+        configCloudinary["cloud_name"] = "dhqpsn90p"
+        configCloudinary["api_key"] = "219489315573247"
+        configCloudinary["api_secret"] = "UsXscbAhfTZPJm1RraNbpDFv9ng"
+        MediaManager.init(this, configCloudinary)
 
 
 //        Permission All Granted Handle
@@ -78,10 +93,34 @@ class AddProductActivity : AppCompatActivity() {
                 startCameraX()
             }
 
-            tvTitle.setOnClickListener {
+            tvProductImageTitle.setOnClickListener {
                 CommonUtils.showToast(
                     this@AddProductActivity,
-                    CommonUtils.showToken(this@AddProductActivity)
+                    "Uri : $currentImageUri, Path : $filePathImage"
+                )
+                currentImageUri?.let { it1 -> uploadToCloudinary(it1) }
+            }
+
+            tvTitle.setOnClickListener {
+                edtProductName.setText("Test Product ${CommonUtils.getCurrentDate()}")
+                edtProductColor.setText("Test Color ${CommonUtils.getCurrentDate()}")
+                edtProductRangeLowStock.setText("10")
+                edtProductPriceS.setText("10000")
+                edtProductStockS.setText("10")
+                edtProductPriceM.setText("10000")
+                edtProductStockM.setText("10")
+                edtProductPriceL.setText("10000")
+                edtProductStockL.setText("10")
+                edtProductPriceXl.setText("10000")
+                edtProductStockXl.setText("10")
+                edtProductPriceXxl.setText("10000")
+                edtProductStockXxl.setText("10")
+                edtProductPriceAll.setText("10000")
+                edtProductStockAll.setText("10")
+
+                CommonUtils.showToast(
+                    this@AddProductActivity,
+                    "Uri : $currentImageUri, Path : $filePathImage"
                 )
             }
             btnSave.setOnClickListener {
@@ -102,6 +141,36 @@ class AddProductActivity : AppCompatActivity() {
 
 
     }
+
+    private fun uploadToCloudinary(uri: Uri) {
+        MediaManager.get().upload(uri).unsigned("rlida6g3").callback(object : UploadCallback {
+            override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                Toast.makeText(applicationContext, "Task successful", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+
+            }
+
+            override fun onReschedule(requestId: String?, error: ErrorInfo?) {
+
+            }
+
+            override fun onError(requestId: String?, error: ErrorInfo?) {
+
+                Toast.makeText(applicationContext, "Task Not successful$error", Toast.LENGTH_SHORT)
+                    .show()
+                Log.e("Cloudinary", "Error: $error")
+            }
+
+            override fun onStart(requestId: String?) {
+
+                Toast.makeText(applicationContext, "Start", Toast.LENGTH_SHORT).show()
+            }
+        }).dispatch()
+    }
+
+
 
     //    Permission Camera START
     private fun allPermissionGranted() = ContextCompat.checkSelfPermission(
@@ -139,7 +208,6 @@ class AddProductActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
             if (uri != null) {
                 currentImageUri = uri
-                //  show image
                 convertImageToBitmap()
             } else {
                 Log.d("IMAGE URI", "Photo Picker : No Media Selected")
@@ -154,8 +222,10 @@ class AddProductActivity : AppCompatActivity() {
 
     private fun convertImageToBitmap() {
         currentImageUri?.let {
-            val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+            val inputStream = contentResolver.openInputStream(it)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
             binding.ivProductImage.setImageBitmap(bitmap)
+            filePathImage = it.path // Menyimpan path file
         }
     }
 
@@ -228,6 +298,7 @@ class AddProductActivity : AppCompatActivity() {
                 val color = edtProductColor.text.toString().trim()
                 val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
                 val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
+                val filePath = this@AddProductActivity.filePathImage
 
                 // Mengambil harga dan stok untuk setiap ukuran produk dengan default 0 jika tidak diisi
                 val sizeS = "S"
@@ -288,7 +359,6 @@ class AddProductActivity : AppCompatActivity() {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
 
 
 }
