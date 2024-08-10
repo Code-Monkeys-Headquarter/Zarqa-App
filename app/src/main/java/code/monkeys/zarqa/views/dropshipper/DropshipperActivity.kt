@@ -41,8 +41,10 @@ class DropshipperActivity : AppCompatActivity() {
 
     private fun logout() {
         lifecycleScope.launch {
-            dataStoreManager.clearToken()
             dataStoreManager.clearRole()
+            dataStoreManager.clearToken()
+            dataStoreManager.clearEmail()
+            dataStoreManager.clearPassword()
 
             val intent = Intent(this@DropshipperActivity, LoginActivity::class.java)
             startActivity(intent)

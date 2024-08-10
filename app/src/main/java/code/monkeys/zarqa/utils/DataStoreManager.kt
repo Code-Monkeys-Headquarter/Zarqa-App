@@ -29,10 +29,43 @@ class DataStoreManager private constructor(private val context: Context) {
         private val NAME_KEY = stringPreferencesKey("name")
         private val OUTLET_NAME_KEY = stringPreferencesKey("outlet_name")
         private val EMAIL_KEY = stringPreferencesKey("email")
+        private val PASSWORD_KEY = stringPreferencesKey("password")
         private val ROLE_KEY = stringPreferencesKey("role")
     }
 
+    val emailFlow: Flow<String?> = context.dataStore.data
+        .map {
+            it[EMAIL_KEY]
+        }
 
+    suspend fun saveEmail(email: String) {
+        context.dataStore.edit { preferences ->
+            preferences[EMAIL_KEY] = email
+        }
+    }
+
+    suspend fun clearEmail() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(EMAIL_KEY)
+        }
+    }
+
+    val passwordFlow: Flow<String?> = context.dataStore.data
+        .map {
+            it[PASSWORD_KEY]
+        }
+
+    suspend fun savePassword(password: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PASSWORD_KEY] = password
+        }
+    }
+
+    suspend fun clearPassword() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(PASSWORD_KEY)
+        }
+    }
 
     val tokenFlow: Flow<String?> = context.dataStore.data
         .map { preferences ->

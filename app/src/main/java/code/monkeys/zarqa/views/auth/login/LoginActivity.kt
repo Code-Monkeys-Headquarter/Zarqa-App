@@ -89,8 +89,9 @@ class LoginActivity : AppCompatActivity() {
 
                 if (validateInput(email, password)) {
                     showLoading()
+                    savePassword(password)
+                    saveEmail(email)
                     loginViewModel.login(email, password)
-
                 } else {
                     Toast.makeText(this@LoginActivity, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
@@ -158,6 +159,18 @@ class LoginActivity : AppCompatActivity() {
     private fun saveRole(role: String) {
         lifecycleScope.launch {
             dataStoreManager.saveRole(role)
+        }
+    }
+
+    private fun saveEmail(email: String) {
+        lifecycleScope.launch {
+            dataStoreManager.saveEmail(email)
+        }
+    }
+
+    private fun savePassword(password: String) {
+        lifecycleScope.launch {
+            dataStoreManager.savePassword(password)
         }
     }
 

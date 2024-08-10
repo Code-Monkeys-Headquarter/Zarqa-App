@@ -58,7 +58,9 @@ class WorkerSettingFragment : Fragment() {
     private fun logout() {
         lifecycleScope.launch {
             dataStoreManager.clearRole()
-            dataStoreManager.clearRole()
+            dataStoreManager.clearToken()
+            dataStoreManager.clearEmail()
+            dataStoreManager.clearPassword()
 
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)

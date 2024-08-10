@@ -41,6 +41,8 @@ class AdminActivity : AppCompatActivity() {
         lifecycleScope.launch {
             dataStoreManager.clearToken()
             dataStoreManager.clearRole()
+            dataStoreManager.clearEmail()
+            dataStoreManager.clearPassword()
             startActivity(Intent(this@AdminActivity, LoginActivity::class.java))
             finish()
         }
