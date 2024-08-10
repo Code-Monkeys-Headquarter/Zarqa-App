@@ -104,20 +104,20 @@
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/black"
-                android:text="Upload"
+                android:text="Galeri"
                 app:cornerRadius="8dp"
                 app:icon="@drawable/ic_image" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_camera"
+                android:id="@+id/btn_upload"
                 android:layout_width="wrap_content"
                 android:layout_height="62dp"
                 android:layout_marginStart="4dp"
                 android:backgroundTint="@color/white"
-                android:text="Kamera"
+                android:text="Upload"
                 android:textColor="@color/black"
                 app:cornerRadius="8dp"
-                app:icon="@drawable/ic_camera"
+                app:icon="@drawable/ic_stock"
                 app:iconTint="@color/black"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp" />

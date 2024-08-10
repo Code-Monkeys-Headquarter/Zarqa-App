@@ -3,7 +3,6 @@ package code.monkeys.zarqa.views.worker.warehouse.product.add
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -32,23 +31,20 @@ import code.monkeys.zarqa.views.worker.warehouse.product.add.OpenCameraActivity.
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
-import java.io.File
-import java.io.FileOutputStream
 
 class AddProductActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUIRED_PERMISSION_CAMERA = Manifest.permission.CAMERA
-        private const val DEFAULT_IMAGE_URI =
-            "android.resource://code.monkeys.zarqa/drawable/product_image_default"
     }
 
     private lateinit var binding: ActivityAddProductBinding
     private var currentImageUri: Uri? = null
     private var filePathImage: String? = null
-    private var configCloudinary: HashMap<String, String> = HashMap()
+    private var penampungStringDariCloudinary: String? = null
     private lateinit var productViewModel: AddProductViewModel
     private lateinit var dataStoreManager: DataStoreManager
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,16 +60,8 @@ class AddProductActivity : AppCompatActivity() {
 
         dataStoreManager = DataStoreManager.getInstance(this@AddProductActivity)
         productViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(Repository(Application()))
+            this, ViewModelFactory(Repository(Application()))
         )[AddProductViewModel::class.java]
-
-//        Cloudinary
-        configCloudinary["cloud_name"] = "dhqpsn90p"
-        configCloudinary["api_key"] = "219489315573247"
-        configCloudinary["api_secret"] = "UsXscbAhfTZPJm1RraNbpDFv9ng"
-        MediaManager.init(this, configCloudinary)
-
 
 //        Permission All Granted Handle
         if (!allPermissionGranted()) {
@@ -89,17 +77,11 @@ class AddProductActivity : AppCompatActivity() {
                 startGallery()
             }
 
-            btnCamera.setOnClickListener {
-                startCameraX()
+            btnUpload.setOnClickListener {
+                currentImageUri?.let { uri -> uploadToCloudinary(uri) }
             }
 
-            tvProductImageTitle.setOnClickListener {
-                CommonUtils.showToast(
-                    this@AddProductActivity,
-                    "Uri : $currentImageUri, Path : $filePathImage"
-                )
-                currentImageUri?.let { it1 -> uploadToCloudinary(it1) }
-            }
+            tvProductImageTitle.setOnClickListener {}
 
             tvTitle.setOnClickListener {
                 edtProductName.setText("Test Product ${CommonUtils.getCurrentDate()}")
@@ -119,8 +101,7 @@ class AddProductActivity : AppCompatActivity() {
                 edtProductStockAll.setText("10")
 
                 CommonUtils.showToast(
-                    this@AddProductActivity,
-                    "Uri : $currentImageUri, Path : $filePathImage"
+                    this@AddProductActivity, "Uri : $currentImageUri, Path : $filePathImage"
                 )
             }
             btnSave.setOnClickListener {
@@ -145,31 +126,41 @@ class AddProductActivity : AppCompatActivity() {
     private fun uploadToCloudinary(uri: Uri) {
         MediaManager.get().upload(uri).unsigned("rlida6g3").callback(object : UploadCallback {
             override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-                Toast.makeText(applicationContext, "Task successful", Toast.LENGTH_SHORT).show()
+                resultData?.let {
+                    val imageUrl = it["url"] as? String
+                    if (imageUrl != null) {
+                        Toast.makeText(
+                            applicationContext, "Upload successful: $imageUrl", Toast.LENGTH_SHORT
+                        ).show()
+                        // Simpan URL untuk digunakan nanti
+                        penampungStringDariCloudinary = imageUrl
+                        // Setelah berhasil upload gambar, proses penyimpanan produk dilakukan
+                        saveProduct()
+                    }
+                }
             }
 
             override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-
+                // Optional: Update progress UI
             }
 
             override fun onReschedule(requestId: String?, error: ErrorInfo?) {
-
+                // Optional: Handle rescheduling
             }
 
             override fun onError(requestId: String?, error: ErrorInfo?) {
-
-                Toast.makeText(applicationContext, "Task Not successful$error", Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext, "Upload failed: $error", Toast.LENGTH_SHORT)
                     .show()
                 Log.e("Cloudinary", "Error: $error")
+                // Jika upload gambar gagal, jangan lanjutkan penyimpanan produk
+                hideLoading()
             }
 
             override fun onStart(requestId: String?) {
-
-                Toast.makeText(applicationContext, "Start", Toast.LENGTH_SHORT).show()
+                // Optional: Handle start
             }
         }).dispatch()
     }
-
 
 
     //    Permission Camera START
@@ -198,10 +189,10 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    private fun startCameraX() {
-        val intent = Intent(this@AddProductActivity, OpenCameraActivity::class.java)
-        launcherIntentCameraX.launch(intent)
-    }
+//    private fun startCameraX() {
+//        val intent = Intent(this@AddProductActivity, OpenCameraActivity::class.java)
+//        launcherIntentCameraX.launch(intent)
+//    }
 
     //    Permission Open Gallery
     private val launcherGallery =
@@ -236,8 +227,7 @@ class AddProductActivity : AppCompatActivity() {
     ): Boolean {
         if (productName.isEmpty() || color.isEmpty() || lowStockAlert <= 0) {
             CommonUtils.showToast(
-                this@AddProductActivity,
-                "Please fill in all the fields correctly"
+                this@AddProductActivity, "Please fill in all the fields correctly"
             )
             hideLoading()
             return false
@@ -252,14 +242,12 @@ class AddProductActivity : AppCompatActivity() {
             btnSave.text = "Loading....."
             btnSave.setBackgroundColor(
                 ContextCompat.getColor(
-                    this@AddProductActivity,
-                    android.R.color.darker_gray
+                    this@AddProductActivity, android.R.color.darker_gray
                 )
             )
             btnSave.setTextColor(
                 ContextCompat.getColor(
-                    this@AddProductActivity,
-                    android.R.color.white
+                    this@AddProductActivity, android.R.color.white
                 )
             )
         }
@@ -272,92 +260,178 @@ class AddProductActivity : AppCompatActivity() {
             btnSave.text = "Simpan"
             btnSave.setBackgroundColor(
                 ContextCompat.getColor(
-                    this@AddProductActivity,
-                    android.R.color.black
+                    this@AddProductActivity, android.R.color.black
                 )
             )
             btnSave.setTextColor(
                 ContextCompat.getColor(
-                    this@AddProductActivity,
-                    android.R.color.white
+                    this@AddProductActivity, android.R.color.white
                 )
             )
         }
     }
 
+//    private fun showConfirmationDialog() {
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Konfirmasi")
+//        builder.setMessage("Apakah Anda yakin ingin menambahkan produk ini?")
+//
+//        builder.setPositiveButton("Ya") { dialog, _ ->
+//            // Menampilkan Loading Sebelum Proses
+//            showLoading()
+//            binding.apply {
+//                val name = edtProductName.text.toString().trim()
+//                val color = edtProductColor.text.toString().trim()
+//                val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
+//                val productImageUri = penampungStringDariCloudinary ?: DEFAULT_IMAGE_URI
+//
+//                // Mengambil harga dan stok untuk setiap ukuran produk dengan default 0 jika tidak diisi
+////                val sizeS = "S"
+////                val pricesS = edtProductPriceS.text.toString().toIntOrNull() ?: 0
+////                val stockS = edtProductStockS.text.toString().toIntOrNull() ?: 0
+////
+////                val sizeM = "M"
+////                val pricesM = edtProductPriceM.text.toString().toIntOrNull() ?: 0
+////                val stockM = edtProductStockM.text.toString().toIntOrNull() ?: 0
+////
+////                val sizeL = "L"
+////                val pricesL = edtProductPriceL.text.toString().toIntOrNull() ?: 0
+////                val stockL = edtProductStockL.text.toString().toIntOrNull() ?: 0
+////
+////                val sizeXL = "XL"
+////                val pricesXL = edtProductPriceXl.text.toString().toIntOrNull() ?: 0
+////                val stockXL = edtProductStockXl.text.toString().toIntOrNull() ?: 0
+////
+////                val sizeXXL = "XXL"
+////                val pricesXXL = edtProductPriceXxl.text.toString().toIntOrNull() ?: 0
+////                val stockXXL = edtProductStockXxl.text.toString().toIntOrNull() ?: 0
+////
+////                val sizeALL = "ALL"
+////                val pricesALL = edtProductPriceAll.text.toString().toIntOrNull() ?: 0
+////                val stockALL = edtProductStockAll.text.toString().toIntOrNull() ?: 0
+//
+//                if (validateInput(name, color, lowStockAlert)) {
+//                    val productTypeS = ProductType(sizeS, pricesS, stockS)
+//                    val productTypeM = ProductType(sizeM, pricesM, stockM)
+//                    val productTypeL = ProductType(sizeL, pricesL, stockL)
+//                    val productTypeXL = ProductType(sizeXL, pricesXL, stockXL)
+//                    val productTypeXXL = ProductType(sizeXXL, pricesXXL, stockXXL)
+//                    val productTypeALL = ProductType(sizeALL, pricesALL, stockALL)
+//                    val product = Product(
+//                        name,
+//                        listOf(productImageUri),
+//                        color = color,
+//                        productType = listOf(
+//                            productTypeS,
+//                            productTypeM,
+//                            productTypeL,
+//                            productTypeXL,
+//                            productTypeXXL,
+//                            productTypeALL
+//                        )
+//                    )
+//                    val token = CommonUtils.showToken(this@AddProductActivity)
+//                    productViewModel.addProduct(token, product)
+//                }
+//            }
+//            dialog.dismiss()
+//        }
+//
+//        builder.setNegativeButton("Batal") { dialog, _ ->
+//            dialog.dismiss()
+//        }
+//
+//        val dialog: AlertDialog = builder.create()
+//        dialog.show()
+//    }
+
     private fun showConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Konfirmasi")
-        builder.setMessage("Apakah Anda yakin ingin menambahkan produk ini?")
-
-        builder.setPositiveButton("Ya") { dialog, _ ->
-            // Menampilkan Loading Sebelum Proses
-            showLoading()
-            binding.apply {
-                val name = edtProductName.text.toString().trim()
-                val color = edtProductColor.text.toString().trim()
-                val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
-                val productImageUri = currentImageUri?.toString() ?: DEFAULT_IMAGE_URI
-                val filePath = this@AddProductActivity.filePathImage
-
-                // Mengambil harga dan stok untuk setiap ukuran produk dengan default 0 jika tidak diisi
-                val sizeS = "S"
-                val pricesS = edtProductPriceS.text.toString().toIntOrNull() ?: 0
-                val stockS = edtProductStockS.text.toString().toIntOrNull() ?: 0
-
-                val sizeM = "M"
-                val pricesM = edtProductPriceM.text.toString().toIntOrNull() ?: 0
-                val stockM = edtProductStockM.text.toString().toIntOrNull() ?: 0
-
-                val sizeL = "L"
-                val pricesL = edtProductPriceL.text.toString().toIntOrNull() ?: 0
-                val stockL = edtProductStockL.text.toString().toIntOrNull() ?: 0
-
-                val sizeXL = "XL"
-                val pricesXL = edtProductPriceXl.text.toString().toIntOrNull() ?: 0
-                val stockXL = edtProductStockXl.text.toString().toIntOrNull() ?: 0
-
-                val sizeXXL = "XXL"
-                val pricesXXL = edtProductPriceXxl.text.toString().toIntOrNull() ?: 0
-                val stockXXL = edtProductStockXxl.text.toString().toIntOrNull() ?: 0
-
-                val sizeALL = "ALL"
-                val pricesALL = edtProductPriceAll.text.toString().toIntOrNull() ?: 0
-                val stockALL = edtProductStockAll.text.toString().toIntOrNull() ?: 0
-
-                if (validateInput(name, color, lowStockAlert)) {
-                    val productTypeS = ProductType(sizeS, pricesS, stockS)
-                    val productTypeM = ProductType(sizeM, pricesM, stockM)
-                    val productTypeL = ProductType(sizeL, pricesL, stockL)
-                    val productTypeXL = ProductType(sizeXL, pricesXL, stockXL)
-                    val productTypeXXL = ProductType(sizeXXL, pricesXXL, stockXXL)
-                    val productTypeALL = ProductType(sizeALL, pricesALL, stockALL)
-                    val product = Product(
-                        name,
-                        listOf(productImageUri),
-                        color = color,
-                        productType = listOf(
-                            productTypeS,
-                            productTypeM,
-                            productTypeL,
-                            productTypeXL,
-                            productTypeXXL,
-                            productTypeALL
-                        )
-                    )
-                    val token = CommonUtils.showToken(this@AddProductActivity)
-                    productViewModel.addProduct(token, product)
+        AlertDialog.Builder(this).apply {
+            setTitle("Confirmation")
+            setMessage("Are you sure you want to add this product?")
+            setPositiveButton("Yes") { _, _ ->
+                showLoading()
+                if (currentImageUri != null) {
+                    uploadToCloudinary(currentImageUri!!)
+                } else {
+                    // Jika gambar belum dipilih, simpan produk tanpa gambar
+                    saveProduct()
                 }
             }
-            dialog.dismiss()
+            setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            create()
+            show()
         }
+    }
 
-        builder.setNegativeButton("Batal") { dialog, _ ->
-            dialog.dismiss()
+    private fun saveProduct() {
+        val productName = binding.edtProductName.text.toString()
+        val color = binding.edtProductColor.text.toString()
+        val lowStockAlert = binding.edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
+        val DEFAULT_IMAGE_URI = "wkwk"
+        val productImageUri = penampungStringDariCloudinary ?: DEFAULT_IMAGE_URI
+
+        if (!validateInput(productName, color, lowStockAlert)) return
+
+        val sizeS = "S"
+        val pricesS = binding.edtProductPriceS.text.toString().toIntOrNull() ?: 0
+        val stockS = binding.edtProductStockS.text.toString().toIntOrNull() ?: 0
+
+        val sizeM = "M"
+        val pricesM = binding.edtProductPriceM.text.toString().toIntOrNull() ?: 0
+        val stockM = binding.edtProductStockM.text.toString().toIntOrNull() ?: 0
+
+        val sizeL = "L"
+        val pricesL = binding.edtProductPriceL.text.toString().toIntOrNull() ?: 0
+        val stockL = binding.edtProductStockL.text.toString().toIntOrNull() ?: 0
+
+        val sizeXL = "XL"
+        val pricesXL = binding.edtProductPriceXl.text.toString().toIntOrNull() ?: 0
+        val stockXL = binding.edtProductStockXl.text.toString().toIntOrNull() ?: 0
+
+        val sizeXXL = "XXL"
+        val pricesXXL = binding.edtProductPriceXxl.text.toString().toIntOrNull() ?: 0
+        val stockXXL = binding.edtProductStockXxl.text.toString().toIntOrNull() ?: 0
+
+        val sizeALL = "ALL"
+        val pricesALL = binding.edtProductPriceAll.text.toString().toIntOrNull() ?: 0
+        val stockALL = binding.edtProductStockAll.text.toString().toIntOrNull() ?: 0
+
+        val productTypeS = ProductType(sizeS, pricesS, stockS)
+        val productTypeM = ProductType(sizeM, pricesM, stockM)
+        val productTypeL = ProductType(sizeL, pricesL, stockL)
+        val productTypeXL = ProductType(sizeXL, pricesXL, stockXL)
+        val productTypeXXL = ProductType(sizeXXL, pricesXXL, stockXXL)
+        val productTypeALL = ProductType(sizeALL, pricesALL, stockALL)
+
+        val newProduct = Product(
+            name = productName,
+            listOf(productImageUri),
+            color = color,
+            productType = listOf(
+                productTypeS,
+                productTypeM,
+                productTypeL,
+                productTypeXL,
+                productTypeXXL,
+                productTypeALL
+            )
+        )
+
+        val token = CommonUtils.showToken(this@AddProductActivity)
+        productViewModel.addProduct(token, newProduct)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.apply {
+            btnBack.setOnClickListener(null)
+            btnGallery.setOnClickListener(null)
+            btnUpload.setOnClickListener(null)
+            btnSave.setOnClickListener(null)
         }
-
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
     }
 
 
