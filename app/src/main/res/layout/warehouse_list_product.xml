@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="8dp"
+
     android:backgroundTint="@color/white"
     app:cardCornerRadius="12dp"
     app:strokeWidth="0dp">
@@ -43,8 +43,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +60,9 @@
                 android:layout_weight="2"
                 android:fontFamily="@font/gilroy_semibold"
                 android:maxLines="2"
-                tools:text="Abaya Hijau\nWaduh"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="Abaya Hijau\nWaduh" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,37 +74,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/gilroy_regular"
-                    android:maxLines="2"
-                    android:text="Terakhir Update"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_product_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/gilroy_semibold"
-                    android:maxLines="2"
-                    tools:text="30 Maret 2002"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/gilroy_regular"
+                    android:fontFamily="@font/gilroy_medium"
                     android:maxLines="2"
                     android:text="Warna"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_product_color"
@@ -111,8 +86,8 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="2"
-                    tools:text="Merah"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    tools:text="Merah" />
 
             </LinearLayout>
 
@@ -126,20 +101,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/gilroy_regular"
+                    android:fontFamily="@font/gilroy_medium"
                     android:maxLines="2"
                     android:text="Total Stock"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:id="@id/tv_product_stock"
+                    android:id="@+id/tv_product_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/gilroy_semibold"
                     android:maxLines="2"
-                    tools:text="3000"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    tools:text="3000" />
 
             </LinearLayout>
 

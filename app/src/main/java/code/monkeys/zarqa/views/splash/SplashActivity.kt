@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -45,8 +43,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         loginViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(Repository(Application()))
+            this, ViewModelFactory(Repository(Application()))
         )[LoginViewModel::class.java]
 
         dataStoreManager = DataStoreManager.getInstance(this)
@@ -55,32 +52,33 @@ class SplashActivity : AppCompatActivity() {
 
     }
 
-//    Automated Login
-private fun automatedLogin() {
-    lifecycleScope.launch {
-        try {
-            val email = dataStoreManager.emailFlow.first()
-            val password = dataStoreManager.passwordFlow.first()
+    //    Automated Login
+    private fun automatedLogin() {
+        lifecycleScope.launch {
+            try {
+                val email = dataStoreManager.emailFlow.first()
+                val password = dataStoreManager.passwordFlow.first()
 
-            if (email != null && password != null) {
-                loginViewModel.login(email, password)
-                // Lakukan login otomatis
-                loginViewModel.loginResponse.observe(this@SplashActivity) { result ->
-                    if (result != null) {
-                        val role = result.data.role
-                        navitageToAppropriatePage(role)
-                    } else {
-                        navigateToLoginPage()
+                if (email != null && password != null) {
+                    loginViewModel.login(email, password)
+                    // Lakukan login otomatis
+                    loginViewModel.loginResponse.observe(this@SplashActivity) { result ->
+                        if (result != null) {
+                            val role = result.data.role
+                            saveToken(result.data.token)
+                            navitageToAppropriatePage(role)
+                        } else {
+                            navigateToLoginPage()
+                        }
                     }
+                } else {
+                    navigateToLoginPage()
                 }
-            } else {
+            } catch (e: Exception) {
                 navigateToLoginPage()
             }
-        } catch (e: Exception) {
-            navigateToLoginPage()
         }
     }
-}
 
 
     private fun navitageToAppropriatePage(role: String) {
@@ -115,5 +113,12 @@ private fun automatedLogin() {
         startActivity(Intent(this, LoginActivity::class.java))
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
+    }
+
+    private fun saveToken(token: String) {
+        lifecycleScope.launch {
+            dataStoreManager.saveToken(token)
+        }
+
     }
 }

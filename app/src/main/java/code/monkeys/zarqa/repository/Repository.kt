@@ -1,16 +1,17 @@
 package code.monkeys.zarqa.repository
 
 import android.app.Application
-import android.util.Log
+import androidx.lifecycle.LiveData
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
 import code.monkeys.zarqa.data.source.remote.request.product.Product
-import code.monkeys.zarqa.data.source.remote.request.product.ProductType
+import code.monkeys.zarqa.data.source.remote.response.DataItem
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
+import code.monkeys.zarqa.data.source.remote.response.ProductResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class Repository(application: Application) {
 
@@ -41,6 +42,7 @@ class Repository(application: Application) {
             throw Exception("Register Failed")
         }
     }
+
     suspend fun addProduct(token: String, product: Product): Result<Unit> {
         return withContext(Dispatchers.IO) {
             try {
@@ -54,6 +56,10 @@ class Repository(application: Application) {
                 Result.failure(e)
             }
         }
+    }
+
+    suspend fun getProducts(token: String): Response<ProductResponse> {
+        return apiService.fetchProducts(token)
     }
 
 

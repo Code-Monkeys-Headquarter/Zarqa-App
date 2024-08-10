@@ -57,10 +57,7 @@ class AddProductActivity : AppCompatActivity() {
 
         dataStoreManager = DataStoreManager.getInstance(this@AddProductActivity)
 
-        productViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(Repository(Application()))
-        )[AddProductViewModel::class.java]
+        productViewModel = ViewModelProvider(this, ViewModelFactory(Repository(Application())))[AddProductViewModel::class.java]
 
 
 //        Permission All Granted Handle

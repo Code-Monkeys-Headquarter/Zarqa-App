@@ -7,6 +7,7 @@ import code.monkeys.zarqa.views.auth.login.LoginViewModel
 import code.monkeys.zarqa.views.auth.register.RegisterViewModel
 import code.monkeys.zarqa.views.worker.warehouse.product.add.AddProductViewModel
 import code.monkeys.zarqa.views.worker.warehouse.product.restock.TakeProductViewModel
+import code.monkeys.zarqa.views.worker.warehouse.tab.allproduct.AllProductViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
@@ -19,6 +20,8 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.F
             return TakeProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(AddProductViewModel::class.java)) {
             return AddProductViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(AllProductViewModel::class.java)) {
+            return AllProductViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
