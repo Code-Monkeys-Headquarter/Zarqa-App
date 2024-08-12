@@ -3,6 +3,7 @@ package code.monkeys.zarqa.views.worker.warehouse.product.add
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -77,33 +78,33 @@ class AddProductActivity : AppCompatActivity() {
                 startGallery()
             }
 
-            btnUpload.setOnClickListener {
-                currentImageUri?.let { uri -> uploadToCloudinary(uri) }
+            btnCamera.setOnClickListener {
+                startCameraX()
             }
 
             tvProductImageTitle.setOnClickListener {}
 
-            tvTitle.setOnClickListener {
-                edtProductName.setText("Test Product ${CommonUtils.getCurrentDate()}")
-                edtProductColor.setText("Test Color ${CommonUtils.getCurrentDate()}")
-                edtProductRangeLowStock.setText("10")
-                edtProductPriceS.setText("10000")
-                edtProductStockS.setText("10")
-                edtProductPriceM.setText("10000")
-                edtProductStockM.setText("10")
-                edtProductPriceL.setText("10000")
-                edtProductStockL.setText("10")
-                edtProductPriceXl.setText("10000")
-                edtProductStockXl.setText("10")
-                edtProductPriceXxl.setText("10000")
-                edtProductStockXxl.setText("10")
-                edtProductPriceAll.setText("10000")
-                edtProductStockAll.setText("10")
-
-                CommonUtils.showToast(
-                    this@AddProductActivity, "Uri : $currentImageUri, Path : $filePathImage"
-                )
-            }
+//            tvTitle.setOnClickListener {
+//                edtProductName.setText("Test Product ${CommonUtils.getCurrentDate()}")
+//                edtProductColor.setText("Test Color ${CommonUtils.getCurrentDate()}")
+//                edtProductRangeLowStock.setText("10")
+//                edtProductPriceS.setText("10000")
+//                edtProductStockS.setText("10")
+//                edtProductPriceM.setText("10000")
+//                edtProductStockM.setText("10")
+//                edtProductPriceL.setText("10000")
+//                edtProductStockL.setText("10")
+//                edtProductPriceXl.setText("10000")
+//                edtProductStockXl.setText("10")
+//                edtProductPriceXxl.setText("10000")
+//                edtProductStockXxl.setText("10")
+//                edtProductPriceAll.setText("10000")
+//                edtProductStockAll.setText("10")
+//
+//                CommonUtils.showToast(
+//                    this@AddProductActivity, "Uri : $currentImageUri, Path : $filePathImage"
+//                )
+//            }
             btnSave.setOnClickListener {
                 showConfirmationDialog()
             }
@@ -113,6 +114,7 @@ class AddProductActivity : AppCompatActivity() {
             result.onSuccess {
                 hideLoading()
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+                finish()
             }.onFailure {
                 hideLoading()
                 Toast.makeText(this, "Failed to add product", Toast.LENGTH_SHORT).show()
@@ -129,9 +131,6 @@ class AddProductActivity : AppCompatActivity() {
                 resultData?.let {
                     val imageUrl = it["url"] as? String
                     if (imageUrl != null) {
-                        Toast.makeText(
-                            applicationContext, "Upload successful: $imageUrl", Toast.LENGTH_SHORT
-                        ).show()
                         // Simpan URL untuk digunakan nanti
                         penampungStringDariCloudinary = imageUrl
                         // Setelah berhasil upload gambar, proses penyimpanan produk dilakukan
@@ -189,10 +188,10 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-//    private fun startCameraX() {
-//        val intent = Intent(this@AddProductActivity, OpenCameraActivity::class.java)
-//        launcherIntentCameraX.launch(intent)
-//    }
+    private fun startCameraX() {
+        val intent = Intent(this@AddProductActivity, OpenCameraActivity::class.java)
+        launcherIntentCameraX.launch(intent)
+    }
 
     //    Permission Open Gallery
     private val launcherGallery =
@@ -429,7 +428,7 @@ class AddProductActivity : AppCompatActivity() {
         binding.apply {
             btnBack.setOnClickListener(null)
             btnGallery.setOnClickListener(null)
-            btnUpload.setOnClickListener(null)
+            btnCamera.setOnClickListener(null)
             btnSave.setOnClickListener(null)
         }
     }

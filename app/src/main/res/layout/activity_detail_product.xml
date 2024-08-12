@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="320dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/abaya_hijau"
+                tools:src="@drawable/abaya_hijau"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -97,8 +97,8 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/gilroy_bold"
                         android:maxLines="2"
-                        android:text="Abaya Hijau"
-                        android:textSize="22sp" />
+                        tools:text="Abaya Hijau"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_product_color"
@@ -106,8 +106,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:fontFamily="@font/gilroy_regular"
-                        android:text="Merah"
-                        android:textSize="18sp" />
+                        tools:text="Merah"
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gilroy_semibold"
-                            android:text="3000"
+                            tools:text="3000"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -152,8 +152,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 tools:itemCount="2"
                 tools:listitem="@layout/warehouse_detail_product_type" />

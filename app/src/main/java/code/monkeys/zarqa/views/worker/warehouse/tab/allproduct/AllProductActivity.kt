@@ -1,6 +1,7 @@
 package code.monkeys.zarqa.views.worker.warehouse.tab.allproduct
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +17,7 @@ import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
+import code.monkeys.zarqa.views.worker.warehouse.product.detail.DetailProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductAdapter
 import kotlinx.coroutines.launch
 
@@ -85,6 +87,15 @@ class AllProductActivity : AppCompatActivity() {
                 }
             }
         }
+
+        adapter.setOnItemClickListener(object : ListProductAdapter.OnItemClickListener {
+            override fun onItemClick(productId: String) {
+                val intent = Intent(this@AllProductActivity, DetailProductActivity::class.java)
+                intent.putExtra("PRODUCT_ID", productId)
+                startActivity(intent)
+            }
+
+        })
 
         val token = CommonUtils.showToken(this)
         allProductViewModel.fetchProducts(token)

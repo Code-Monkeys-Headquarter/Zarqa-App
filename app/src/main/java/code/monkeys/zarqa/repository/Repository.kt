@@ -1,11 +1,10 @@
 package code.monkeys.zarqa.repository
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
 import code.monkeys.zarqa.data.source.remote.request.product.Product
-import code.monkeys.zarqa.data.source.remote.response.DataItem
+import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
@@ -60,6 +59,19 @@ class Repository(application: Application) {
 
     suspend fun getProducts(token: String): Response<ProductResponse> {
         return apiService.fetchProducts(token)
+    }
+
+    suspend fun getProductDetail(token: String, productId: String): Result<ProductDetailResponse?> {
+        return try {
+            val response = apiService.getProductDetail(token, productId)
+            if (response.isSuccessful) {
+                Result.success(response.body())
+            } else {
+                Result.failure(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
 

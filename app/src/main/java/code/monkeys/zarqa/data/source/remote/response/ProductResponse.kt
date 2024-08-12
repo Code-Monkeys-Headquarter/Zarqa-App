@@ -20,7 +20,7 @@ data class ProductResponse(
 @Parcelize
 data class ProductTypeItem(
 
-    @field:SerializedName("size")
+                                                                @field:SerializedName("size")
     val size: String? = null,
 
     @field:SerializedName("price")
@@ -30,7 +30,7 @@ data class ProductTypeItem(
     val id: String? = null,
 
     @field:SerializedName("stock")
-    val stock: Int? = null
+    val stock: Int?                                                                                                                                                                      = null
 ) : Parcelable
 
 @Parcelize

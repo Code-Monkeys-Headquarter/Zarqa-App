@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 class ListProductAdapter(private var productList: List<DataItem?>) :
     RecyclerView.Adapter<ListProductAdapter.ProductViewHolder>() {
 
+    private var onItemClickListener: OnItemClickListener? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -41,6 +43,12 @@ class ListProductAdapter(private var productList: List<DataItem?>) :
                     Glide.with(ivProductImage.context)
                         .load(it.images?.getOrNull(0) ?: R.drawable.image_placeholder)
                         .into(ivProductImage)
+                    val productId: String = it.id ?: ""
+
+
+                    root.setOnClickListener {
+                        onItemClickListener?.onItemClick(productId)
+                    }
                 }
             }
 
@@ -55,6 +63,13 @@ class ListProductAdapter(private var productList: List<DataItem?>) :
         notifyDataSetChanged()  // Jika ingin update semua item
     }
 
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        onItemClickListener = listener
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(productId: String)
+    }
 
 
 }

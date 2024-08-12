@@ -109,15 +109,15 @@
                 app:icon="@drawable/ic_image" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_upload"
+                android:id="@+id/btn_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="62dp"
                 android:layout_marginStart="4dp"
                 android:backgroundTint="@color/white"
-                android:text="Upload"
+                android:text="Kamera"
                 android:textColor="@color/black"
                 app:cornerRadius="8dp"
-                app:icon="@drawable/ic_stock"
+                app:icon="@drawable/ic_camera"
                 app:iconTint="@color/black"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp" />

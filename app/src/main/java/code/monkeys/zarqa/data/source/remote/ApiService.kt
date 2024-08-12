@@ -1,6 +1,7 @@
 package code.monkeys.zarqa.data.source.remote
 
 import code.monkeys.zarqa.data.source.remote.request.product.Product
+import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
@@ -11,6 +12,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 interface ApiService {
@@ -42,5 +44,11 @@ interface ApiService {
     suspend fun fetchProducts(
         @Header("Authorization") token: String
     ): Response<ProductResponse>
+
+    @GET("product/{productId}")
+    suspend fun getProductDetail(
+        @Header("Authorization") token: String,
+        @Path("productId") productId: String
+    ): Response<ProductDetailResponse>
 
 }
