@@ -1,23 +1,20 @@
 package code.monkeys.zarqa.views.worker.warehouse
 
 import android.content.Intent
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import code.monkeys.zarqa.R
-import code.monkeys.zarqa.databinding.FragmentWorkerSettingBinding
 import code.monkeys.zarqa.databinding.FragmentWorkerWarehouseBinding
 import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.views.worker.warehouse.product.add.AddProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.product.restock.TakeProductActivity
-import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.SectionPagerAdapter
-import com.google.android.material.tabs.TabLayoutMediator
+import code.monkeys.zarqa.views.worker.warehouse.tab.allproduct.AllProductActivity
 
 class WorkerWarehouseFragment : Fragment() {
 
@@ -58,16 +55,16 @@ class WorkerWarehouseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val sectionPagerAdapter = SectionPagerAdapter(this)
-        val viewPager = binding.viewPager
-        viewPager.adapter = sectionPagerAdapter
-        val tabs = binding.tabLayout
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
-        }.attach()
+//        val sectionPagerAdapter = SectionPagerAdapter(this)
+//        val viewPager = binding.viewPager
+//        viewPager.adapter = sectionPagerAdapter
+//        val tabs = binding.tabLayout
+//        TabLayoutMediator(tabs, viewPager) { tab, position ->
+//            tab.text = resources.getString(TAB_TITLES[position])
+//        }.attach()
 
         binding.apply {
-            btnAddProduct.setOnClickListener{
+            btnAddProduct.setOnClickListener {
                 val intent = Intent(requireContext(), AddProductActivity::class.java)
                 startActivity(intent)
             }
@@ -77,6 +74,12 @@ class WorkerWarehouseFragment : Fragment() {
                 startActivity(intent)
                 Log.i("TOKEN", "Token : ${CommonUtils.showToken(requireContext())}")
             }
+
+            cvAllProduct.setOnClickListener {
+                val intent = Intent(requireContext(), AllProductActivity::class.java)
+                startActivity(intent)
+            }
+
         }
     }
 }
