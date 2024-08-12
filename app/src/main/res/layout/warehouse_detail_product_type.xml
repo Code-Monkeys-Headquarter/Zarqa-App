@@ -6,9 +6,10 @@
     app:cardElevation="4dp"
     android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
-
-    >
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                 android:ellipsize="end"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:fontFamily="@font/gilroy_semibold"
                 />
 
@@ -54,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="Harga Produk : "
                     android:layout_gravity="start"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/gilroy_medium"
                     />
 
@@ -66,7 +67,7 @@
                     android:layout_gravity="start"
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="2dp"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/gilroy_bold"
                     />
 
@@ -84,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:text="Stock Produk : "
                     android:layout_gravity="start"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/gilroy_medium"
                     />
 
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="3000"
                     android:layout_gravity="start"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/gilroy_bold"
                     />
 
