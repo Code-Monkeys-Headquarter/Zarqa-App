@@ -3,6 +3,9 @@ package code.monkeys.zarqa.views.worker.warehouse.product.detail
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,6 +28,34 @@ class DetailProductActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailProductViewModel
     private lateinit var dataStoreModel: DataStoreManager
     private lateinit var adapter: ListProductTypeAdapter
+
+    //    Animation Floating Action Button
+    private val rotateOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.rotate_open_extended_fab
+        )
+    }
+    private val rotateClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.rotate_close_extended_fab
+        )
+    }
+    private val fromBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.from_bottom_extended_fab
+        )
+    }
+    private val toBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.to_bottom_extended_fab
+        )
+    }
+
+    private var clicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDetailProductBinding.inflate(layoutInflater)
@@ -92,6 +123,46 @@ class DetailProductActivity : AppCompatActivity() {
             btnBack.setOnClickListener {
                 finish()
             }
+
+            fabEdit.setOnClickListener {
+
+            }
+
+            fabDelete.setOnClickListener {
+
+            }
+
+            fabExtended.setOnClickListener {
+                onAddedButtonClicked()
+            }
+        }
+    }
+
+    private fun onAddedButtonClicked() {
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setVisibility(clicked: Boolean) {
+        if (!clicked) {
+            binding.fabEdit.visibility = View.VISIBLE
+            binding.fabDelete.visibility = View.VISIBLE
+        } else {
+            binding.fabEdit.visibility = View.INVISIBLE
+            binding.fabEdit.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setAnimation(clicked: Boolean) {
+        if (!clicked) {
+            binding.fabEdit.startAnimation(fromBottom)
+            binding.fabDelete.startAnimation(fromBottom)
+            binding.fabExtended.startAnimation(rotateOpen)
+        } else {
+            binding.fabEdit.startAnimation(toBottom)
+            binding.fabDelete.startAnimation(toBottom)
+            binding.fabExtended.startAnimation(rotateClose)
         }
     }
 
