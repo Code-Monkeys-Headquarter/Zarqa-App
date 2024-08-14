@@ -9,6 +9,45 @@
     android:layout_height="match_parent"
     tools:context=".views.worker.warehouse.tab.allproduct.AllProductActivity">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_product_list">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+
+            <include layout="@layout/warehouse_list_product_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
     <!--  Title and Back Button  -->
     <LinearLayout
         android:id="@+id/linear_layout_dashboard_and_title"
@@ -71,12 +110,22 @@
     <!--            app:layout_constraintStart_toStartOf="parent"-->
     <!--            app:layout_constraintTop_toBottomOf="@+id/search_bar" />-->
 
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swp_refresh_layout"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title" />-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
         android:layout_marginTop="20dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

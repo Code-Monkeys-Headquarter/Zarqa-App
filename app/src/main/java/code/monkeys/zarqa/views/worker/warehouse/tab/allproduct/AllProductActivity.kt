@@ -4,14 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivityAllProductBinding
@@ -21,7 +23,7 @@ import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.product.detail.DetailProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductAdapter
-import kotlinx.coroutines.launch
+import com.facebook.shimmer.ShimmerFrameLayout
 
 @Suppress("UNUSED_EXPRESSION")
 class AllProductActivity : AppCompatActivity() {
@@ -30,6 +32,7 @@ class AllProductActivity : AppCompatActivity() {
     private lateinit var dataStoreManager: DataStoreManager
     private lateinit var allProductViewModel: AllProductViewModel
     private lateinit var adapter: ListProductAdapter
+    private lateinit var shimmerLoading: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAllProductBinding.inflate(layoutInflater)
@@ -42,6 +45,8 @@ class AllProductActivity : AppCompatActivity() {
             insets
         }
 
+        shimmerLoading = binding.shimmerFrameLayout
+
         binding.apply {
             btnBack.setOnClickListener {
                 finish()
@@ -50,6 +55,12 @@ class AllProductActivity : AppCompatActivity() {
             btnSort.setOnClickListener {
                 CommonUtils.showToast(this@AllProductActivity, "Sort")
             }
+
+//            swpRefreshLayout.setOnRefreshListener {
+////                allProductViewModel.fetchProducts(CommonUtils.showToken(this@AllProductActivity))
+//                swpRefreshLayout.isRefreshing = false
+//                CommonUtils.showToast(this@AllProductActivity, "Success added Swipe Refrest layout")
+//            }
         }
 
         popupMenuSort()
@@ -73,6 +84,11 @@ class AllProductActivity : AppCompatActivity() {
 
         allProductViewModel.status.observe(this) { status ->
             Log.e("AllProductFragment", "Status: $status")
+            if (status == "success") {
+                shimmerLoading.stopShimmer()
+                shimmerLoading.hideShimmer()
+                shimmerLoading.visibility = View.GONE
+            }
         }
 
         allProductViewModel.code.observe(this) { code ->
@@ -81,16 +97,6 @@ class AllProductActivity : AppCompatActivity() {
 
         allProductViewModel.errorMessage.observe(this) { errorMessage ->
             Log.e("AllProductFragment", "Error Message: $errorMessage")
-        }
-
-        lifecycleScope.launch {
-            dataStoreManager.tokenFlow.collect { token ->
-                if (token != null) {
-                    allProductViewModel.fetchProducts(token)
-                } else {
-                    Log.e("AllProductFragment", "Token is null")
-                }
-            }
         }
 
         adapter.setOnItemClickListener(object : ListProductAdapter.OnItemClickListener {
@@ -105,6 +111,8 @@ class AllProductActivity : AppCompatActivity() {
         val token = CommonUtils.showToken(this)
         allProductViewModel.fetchProducts(token)
         Log.e("AllProductFragment", CommonUtils.showToken(this))
+
+
     }
 
     @SuppressLint("DiscouragedPrivateApi")
