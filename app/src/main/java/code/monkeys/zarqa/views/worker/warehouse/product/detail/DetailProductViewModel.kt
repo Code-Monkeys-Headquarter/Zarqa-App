@@ -54,4 +54,14 @@ class DetailProductViewModel(private val repository: Repository) : ViewModel() {
 
     }
 
+    private val _deleteProduct = MutableLiveData<Result<Unit>>()
+    val deleteProduct: LiveData<Result<Unit>> get() = _deleteProduct
+
+    fun deleteProduct(token: String, productId: String) {
+        viewModelScope.launch {
+            val result = repository.deleteProduct(token, productId)
+            _deleteProduct.value = result
+        }
+    }
+
 }

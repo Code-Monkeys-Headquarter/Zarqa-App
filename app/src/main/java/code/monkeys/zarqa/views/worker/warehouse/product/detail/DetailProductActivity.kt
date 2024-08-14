@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivityDetailProductBinding
 import code.monkeys.zarqa.repository.Repository
+import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductTypeAdapter
@@ -108,15 +109,28 @@ class DetailProductActivity : AppCompatActivity() {
             }
 
         }
+        detailViewModel.deleteProduct.observe(this) { result ->
+            result.onSuccess {
+                CommonUtils.showToast(this, "Product deleted successfully")
+                finish()
+            }.onFailure {
+                Log.e("DetailProductActivity", "Failed to delete product", it)
+            }
+        }
 
         lifecycleScope.launch {
             dataStoreModel.tokenFlow.collect { token ->
                 if (token != null) {
                     detailViewModel.fetchProductDetail(token, productId)
+                    binding.fabDelete.setOnClickListener {
+                        CommonUtils.showToast(this@DetailProductActivity, "Delete")
+                        detailViewModel.deleteProduct(token, productId)
+                    }
                 } else {
                     Log.e("DetailProductActivity", "Token is null")
                 }
             }
+
         }
 
         binding.apply {
@@ -165,5 +179,4 @@ class DetailProductActivity : AppCompatActivity() {
             binding.fabExtended.startAnimation(rotateClose)
         }
     }
-
 }

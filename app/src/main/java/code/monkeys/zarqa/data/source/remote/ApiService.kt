@@ -1,12 +1,13 @@
 package code.monkeys.zarqa.data.source.remote
 
 import code.monkeys.zarqa.data.source.remote.request.product.Product
-import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
+import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -51,4 +52,10 @@ interface ApiService {
         @Path("productId") productId: String
     ): Response<ProductDetailResponse>
 
+    @DELETE("product/{productId}")
+    suspend fun deleteProduct(
+        @Header("Authorization") token: String,
+        @Path("productId") productId: String
+    ): Response<Unit>
 }
+

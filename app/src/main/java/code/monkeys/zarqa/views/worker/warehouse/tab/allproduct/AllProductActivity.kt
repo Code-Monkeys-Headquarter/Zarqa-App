@@ -1,9 +1,11 @@
 package code.monkeys.zarqa.views.worker.warehouse.tab.allproduct
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,6 +23,7 @@ import code.monkeys.zarqa.views.worker.warehouse.product.detail.DetailProductAct
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductAdapter
 import kotlinx.coroutines.launch
 
+@Suppress("UNUSED_EXPRESSION")
 class AllProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAllProductBinding
@@ -44,10 +47,12 @@ class AllProductActivity : AppCompatActivity() {
                 finish()
             }
 
-            btnMenu.setOnClickListener {
-                CommonUtils.showToast(this@AllProductActivity, "Menu")
+            btnSort.setOnClickListener {
+                CommonUtils.showToast(this@AllProductActivity, "Sort")
             }
         }
+
+        popupMenuSort()
 
         dataStoreManager = DataStoreManager.getInstance(this)
 
@@ -100,5 +105,43 @@ class AllProductActivity : AppCompatActivity() {
         val token = CommonUtils.showToken(this)
         allProductViewModel.fetchProducts(token)
         Log.e("AllProductFragment", CommonUtils.showToken(this))
+    }
+
+    @SuppressLint("DiscouragedPrivateApi")
+    private fun popupMenuSort() {
+        val popUpMenu = PopupMenu(this, binding.btnSort).apply {
+            inflate(R.menu.popup_sort_menu)
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.sort_alpha_up -> {
+                        CommonUtils.showToast(this@AllProductActivity, "Sorting A-Z")
+                        true
+                    }
+
+                    R.id.sort_alpha_down -> {
+                        CommonUtils.showToast(this@AllProductActivity, "Sorting Z-A")
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
+
+        // Mengaktifkan penampilan ikon dalam PopupMenu
+        try {
+            val popup =
+                PopupMenu::class.java.getDeclaredField("mPopup").apply { isAccessible = true }
+            val menu = popup.get(popUpMenu)
+            menu.javaClass.getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                .invoke(menu, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        binding.btnSort.setOnClickListener {
+            popUpMenu.show()
+        }
+
     }
 }

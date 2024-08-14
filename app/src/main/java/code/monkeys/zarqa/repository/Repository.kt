@@ -4,8 +4,8 @@ import android.app.Application
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
 import code.monkeys.zarqa.data.source.remote.request.product.Product
-import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
+import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductResponse
 import code.monkeys.zarqa.data.source.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +71,21 @@ class Repository(application: Application) {
             }
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun deleteProduct(token: String, productId: String): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.deleteProduct(token, productId)
+                if (response.isSuccessful) {
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Throwable(response.message()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
         }
     }
 
