@@ -128,9 +128,11 @@ dependencies {
     implementation ("com.cloudinary:cloudinary-android-download:2.5.0")
     implementation ("com.cloudinary:cloudinary-android-preprocess:2.5.0")
 
-    implementation ("com.airbnb.android:epoxy:4.6.3")
-
+//    Shimmer Loading by Facebook
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+//    Swipe Refresh Layout
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 
 

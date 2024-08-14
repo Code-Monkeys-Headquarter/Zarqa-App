@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
@@ -19,75 +17,74 @@ import code.monkeys.zarqa.R
 import code.monkeys.zarqa.databinding.ActivityAllProductBinding
 import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.utils.CommonUtils
-import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
 import code.monkeys.zarqa.views.worker.warehouse.product.detail.DetailProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductAdapter
-import com.facebook.shimmer.ShimmerFrameLayout
 
-@Suppress("UNUSED_EXPRESSION")
 class AllProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAllProductBinding
-    private lateinit var dataStoreManager: DataStoreManager
     private lateinit var allProductViewModel: AllProductViewModel
     private lateinit var adapter: ListProductAdapter
-    private lateinit var shimmerLoading: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAllProductBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(binding.root)
+        setUpWindowSet()
+
+
+        setRecyclerView()
+        initViewModel()
+        observeViewModel()
+        fetchProducts()
+        swipeRefreshLayout()
+        setPopUpMenu()
+        setBackButton()
+    }
+
+    private fun setUpWindowSet() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
-        shimmerLoading = binding.shimmerFrameLayout
-
-        binding.apply {
-            btnBack.setOnClickListener {
-                finish()
-            }
-
-            btnSort.setOnClickListener {
-                CommonUtils.showToast(this@AllProductActivity, "Sort")
-            }
-
-//            swpRefreshLayout.setOnRefreshListener {
-////                allProductViewModel.fetchProducts(CommonUtils.showToken(this@AllProductActivity))
-//                swpRefreshLayout.isRefreshing = false
-//                CommonUtils.showToast(this@AllProductActivity, "Success added Swipe Refrest layout")
-//            }
-        }
-
-        popupMenuSort()
-
-        dataStoreManager = DataStoreManager.getInstance(this)
-
+    private fun setRecyclerView() {
         adapter = ListProductAdapter(emptyList())
         binding.rvProductList.adapter = adapter
-        binding.rvProductList.layoutManager = LinearLayoutManager(this)
+        binding.rvProductList.layoutManager = LinearLayoutManager(this@AllProductActivity)
 
+        adapter.setOnItemClickListener(object : ListProductAdapter.OnItemClickListener {
+            override fun onItemClick(productId: String) {
+                val intent = Intent(this@AllProductActivity, DetailProductActivity::class.java)
+                intent.putExtra("PRODUCT_ID", productId)
+                startActivity(intent)
+            }
+        })
+    }
+
+    private fun initViewModel() {
         val repository = Repository(Application())
-
         allProductViewModel = ViewModelProvider(
             this,
             ViewModelFactory(repository)
         )[AllProductViewModel::class.java]
+    }
 
+    private fun observeViewModel() {
         allProductViewModel.products.observe(this) { product ->
             adapter.updateData(product)
+            stopShimmerLoading()
         }
 
         allProductViewModel.status.observe(this) { status ->
             Log.e("AllProductFragment", "Status: $status")
             if (status == "success") {
-                shimmerLoading.stopShimmer()
-                shimmerLoading.hideShimmer()
-                shimmerLoading.visibility = View.GONE
+                stopShimmerLoading()
             }
         }
 
@@ -97,22 +94,31 @@ class AllProductActivity : AppCompatActivity() {
 
         allProductViewModel.errorMessage.observe(this) { errorMessage ->
             Log.e("AllProductFragment", "Error Message: $errorMessage")
+            stopShimmerLoading()
         }
+    }
 
-        adapter.setOnItemClickListener(object : ListProductAdapter.OnItemClickListener {
-            override fun onItemClick(productId: String) {
-                val intent = Intent(this@AllProductActivity, DetailProductActivity::class.java)
-                intent.putExtra("PRODUCT_ID", productId)
-                startActivity(intent)
-            }
+    private fun swipeRefreshLayout() {
+        binding.swpRefreshLayout.setOnRefreshListener {
+            fetchProducts()
+        }
+    }
 
-        })
-
-        val token = CommonUtils.showToken(this)
+    private fun fetchProducts() {
+        val token = CommonUtils.showToken(this@AllProductActivity)
         allProductViewModel.fetchProducts(token)
-        Log.e("AllProductFragment", CommonUtils.showToken(this))
+    }
 
+    private fun setBackButton() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+    }
 
+    private fun setPopUpMenu() {
+        binding.btnSort.setOnClickListener {
+            popupMenuSort()
+        }
     }
 
     @SuppressLint("DiscouragedPrivateApi")
@@ -151,5 +157,14 @@ class AllProductActivity : AppCompatActivity() {
             popUpMenu.show()
         }
 
+    }
+
+    private fun stopShimmerLoading() {
+        binding.shimmerFrameLayout.apply {
+            stopShimmer()
+            hideShimmer()
+            visibility = View.GONE
+        }
+        binding.swpRefreshLayout.isRefreshing = false
     }
 }

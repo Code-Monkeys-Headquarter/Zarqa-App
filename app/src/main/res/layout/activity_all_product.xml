@@ -9,43 +9,85 @@
     android:layout_height="match_parent"
     tools:context=".views.worker.warehouse.tab.allproduct.AllProductActivity">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerFrameLayout"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rv_product_list">
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title">
 
-        <LinearLayout
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+
+                <include layout="@layout/warehouse_list_product_shimmer" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+        <!--        android:id="@+id/swp_refresh_layout"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="0dp"-->
+
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title" />-->
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swp_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/warehouse_list_product_shimmer" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <include layout="@layout/warehouse_list_product_shimmer" />
 
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-
-            <include layout="@layout/warehouse_list_product_shimmer" />
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <!--  Title and Back Button  -->
@@ -110,26 +152,6 @@
     <!--            app:layout_constraintStart_toStartOf="parent"-->
     <!--            app:layout_constraintTop_toBottomOf="@+id/search_bar" />-->
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swp_refresh_layout"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title" />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
