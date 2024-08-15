@@ -66,82 +66,147 @@
                     app:layout_constraintStart_toStartOf="@+id/guideline_start_nested"
                     app:layout_constraintTop_toTopOf="@+id/guideline_top_nested"
                     app:strokeWidth="0dp">
-
-                    <!--  Layout Dashboard Summary  -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
                         android:background="@drawable/gradient_background_dashboard"
-                        android:paddingStart="10dp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="10dp">
+                        android:orientation="vertical">
 
-                        <!--  Layout Dashboard Summary Start  -->
+                        <!--  Layout Dashboard Tabungan  -->
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingStart="10dp"
+                            android:paddingTop="16dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="16dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginEnd="20dp"
+                                android:backgroundTint="@color/white"
+                                app:cardCornerRadius="100dp"
+                                app:strokeWidth="0dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_cash_stack"
+                                    app:tint="#0061ff" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <!--  Tabungan  -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <!--  Value Tabungan  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gilroy_bold"
+                                    android:text="Rp 200.000.000"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp" />
+
+                                <!--  Title Tabungan  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/gilroy_medium"
+                                    android:text="Tabungan Gudang"
+                                    android:textColor="#ABFFFFFF"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="20dp"
+                            android:paddingBottom="16dp"
+                            android:paddingStart="10dp"
+                            android:paddingTop="16dp"
+                            android:paddingEnd="10dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <!--  Title Tabungan  -->
-                            <TextView
+                            <!--  Jumlah Barang  -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/gilroy_semibold"
-                                android:text="Tabungan Gudang"
-                                android:textSize="18sp" />
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <!--  Value Tabungan  -->
-                            <TextView
+                                <!--  Value Jumlah Barang  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gilroy_bold"
+                                    android:text="40"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
+
+                                <!--  Title Jumlah Barang  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/gilroy_medium"
+                                    android:text="Jumlah Barang"
+                                    android:textColor="#ABFFFFFF"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                            <!--  Jumlah Stock  -->
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/gilroy_semibold"
-                                android:text="Rp 200.000.000"
-                                android:textSize="16sp" />
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <!--  Title Jumlah Barang  -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:fontFamily="@font/gilroy_semibold"
-                                android:text="Jumlah Barang"
-                                android:textSize="16sp" />
+                                <!--  Value Jumlah Barang  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/gilroy_bold"
+                                    android:text="200.000"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
 
-                            <!--  Value Jumlah Barang  -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/gilroy_medium"
-                                android:text="20"
-                                android:textSize="14sp" />
+                                <!--  Title Jumlah Barang  -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="@font/gilroy_medium"
+                                    android:text="Jumlah Stock"
+                                    android:textColor="#ABFFFFFF"
+                                    android:textSize="14sp" />
 
-                            <!--  Title Jumlah Stock  -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="@font/gilroy_semibold"
-                                android:text="Jumlah Stock"
-                                android:textSize="16sp" />
+                            </LinearLayout>
 
-                            <!--  Value Stock  -->
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/gilroy_medium"
-                                android:text="20.000"
-                                android:textSize="14sp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
+
+
+
                 </com.google.android.material.card.MaterialCardView>
+
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_start_nested"
