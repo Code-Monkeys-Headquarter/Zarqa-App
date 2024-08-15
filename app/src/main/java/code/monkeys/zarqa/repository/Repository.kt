@@ -89,19 +89,4 @@ class Repository(application: Application) {
         }
     }
 
-
-//    suspend fun addProduct(): Result<Any> {
-//        return try {
-//
-//            val response = apiService.addProduct(token, name, images, color, productTypeJson)
-//            if (response.isSuccessful) {
-//                Result.success(response.body()!!)
-//            } else {
-//                Result.failure(Throwable(response.message()))
-//            }
-//        } catch (e: Exception) {
-//            Result.failure(e)
-//        }
-//    }
-
 }

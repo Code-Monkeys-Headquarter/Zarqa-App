@@ -30,6 +30,8 @@ class DetailProductActivity : AppCompatActivity() {
     private lateinit var dataStoreModel: DataStoreManager
     private lateinit var adapter: ListProductTypeAdapter
 
+    private var clicked = false
+
     //    Animation Floating Action Button
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -56,33 +58,35 @@ class DetailProductActivity : AppCompatActivity() {
         )
     }
 
-    private var clicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityDetailProductBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        windowsSet()
+        showLoading()
 
-        dataStoreModel = DataStoreManager.getInstance(this@DetailProductActivity)
-        detailViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(Repository(Application()))
-        )[DetailProductViewModel::class.java]
+        initViewModel()
+        initDataStoreManager()
+        initAdapter()
 
-        adapter = ListProductTypeAdapter(emptyList())
-        binding.rvProductType.layoutManager = LinearLayoutManager(this)
+        statusHttpObserver()
+        val productId = intent.getStringExtra("PRODUCT_ID") ?: ""
+        fetchProductDetail(productId)
+        fetchProductDetailObserver()
 
-        val productId = intent.getStringExtra("PRODUCT_ID") ?: return
+        backButton()
+        extendedFloatingActionButton()
+        deleteObserver()
+    }
 
-
+    private fun statusHttpObserver() {
         detailViewModel.status.observe(this) {
             Log.e("DetailProductActivity", "Status: $it")
+            if (it == "success") {
+                hideLoading()
+            }
         }
 
         detailViewModel.code.observe(this) {
@@ -92,7 +96,26 @@ class DetailProductActivity : AppCompatActivity() {
         detailViewModel.errorMessage.observe(this) {
             Log.e("DetailProductActivity", "Error Message: $it")
         }
+    }
 
+    private fun fetchProductDetail(productId: String) {
+        lifecycleScope.launch {
+            showLoading()
+            dataStoreModel.tokenFlow.collect { token ->
+                if (token != null) {
+                    detailViewModel.fetchProductDetail(token, productId)
+                    hideLoading()
+                } else {
+                    Log.e("DetailProductActivity", "Token is null")
+                    showLoading()
+                }
+            }
+
+        }
+    }
+
+    private fun fetchProductDetailObserver() {
+        showLoading()
         detailViewModel.productDetail.observe(this) { productDetail ->
             productDetail?.let {
                 binding.apply {
@@ -105,49 +128,49 @@ class DetailProductActivity : AppCompatActivity() {
 
                     val adapter = ListProductTypeAdapter(it.productType)
                     binding.rvProductType.adapter = adapter
+                    hideLoading()
                 }
             }
 
         }
+    }
+
+    private fun extendedFloatingActionButton() {
+        binding.fabExtended.setOnClickListener {
+            onAddedButtonClicked()
+        }
+    }
+
+    private fun backButton() {
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun initAdapter() {
+        adapter = ListProductTypeAdapter(emptyList())
+        binding.rvProductType.adapter = adapter
+        binding.rvProductType.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun initViewModel() {
+        detailViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(Repository(Application()))
+        )[DetailProductViewModel::class.java]
+    }
+
+    private fun initDataStoreManager() {
+        dataStoreModel = DataStoreManager.getInstance(this@DetailProductActivity)
+    }
+
+    private fun deleteObserver() {
         detailViewModel.deleteProduct.observe(this) { result ->
             result.onSuccess {
                 CommonUtils.showToast(this, "Product deleted successfully")
                 finish()
             }.onFailure {
                 Log.e("DetailProductActivity", "Failed to delete product", it)
-            }
-        }
-
-        lifecycleScope.launch {
-            dataStoreModel.tokenFlow.collect { token ->
-                if (token != null) {
-                    detailViewModel.fetchProductDetail(token, productId)
-                    binding.fabDelete.setOnClickListener {
-                        CommonUtils.showToast(this@DetailProductActivity, "Delete")
-                        detailViewModel.deleteProduct(token, productId)
-                    }
-                } else {
-                    Log.e("DetailProductActivity", "Token is null")
-                }
-            }
-
-        }
-
-        binding.apply {
-            btnBack.setOnClickListener {
-                finish()
-            }
-
-            fabEdit.setOnClickListener {
-
-            }
-
-            fabDelete.setOnClickListener {
-
-            }
-
-            fabExtended.setOnClickListener {
-                onAddedButtonClicked()
             }
         }
     }
@@ -177,6 +200,30 @@ class DetailProductActivity : AppCompatActivity() {
             binding.fabEdit.startAnimation(toBottom)
             binding.fabDelete.startAnimation(toBottom)
             binding.fabExtended.startAnimation(rotateClose)
+        }
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            lottieLoadingCard.visibility = View.VISIBLE
+            nestedScrollView.visibility = View.GONE
+            lottieLoadingCard.playAnimation()
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            lottieLoadingCard.visibility = View.GONE
+            nestedScrollView.visibility = View.VISIBLE
+            lottieLoadingCard.cancelAnimation()
+        }
+    }
+
+    private fun windowsSet() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }
