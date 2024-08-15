@@ -54,18 +54,20 @@
                 android:layout_height="match_parent">
 
                 <!--  Write Code Here  -->
+
+                <!--  Dashboard Card Tabungan dan Jumlah  -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_savings_and_quantity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:elevation="4dp"
                     android:translationZ="2dp"
-                    app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
-                    app:layout_constraintBottom_toTopOf="@+id/guideline_bottom_nested"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_end_nested"
                     app:layout_constraintStart_toStartOf="@+id/guideline_start_nested"
                     app:layout_constraintTop_toTopOf="@+id/guideline_top_nested"
                     app:strokeWidth="0dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -77,14 +79,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
-                            android:paddingStart="10dp"
-                            android:paddingTop="16dp"
-                            android:paddingEnd="10dp"
-                            android:paddingBottom="16dp">
+                            android:padding="20dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
+                                android:layout_gravity="center"
                                 android:layout_marginEnd="20dp"
                                 android:backgroundTint="@color/white"
                                 app:cardCornerRadius="100dp"
@@ -107,18 +107,23 @@
 
                                 <!--  Value Tabungan  -->
                                 <TextView
+                                    android:id="@+id/tv_total_saving"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/gilroy_bold"
+                                    android:fontFamily="@font/gilroy_semibold"
                                     android:text="Rp 200.000.000"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"
                                     android:textColor="@color/white"
-                                    android:textSize="18sp" />
+                                    android:textSize="22sp" />
 
                                 <!--  Title Tabungan  -->
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:fontFamily="@font/gilroy_medium"
                                     android:text="Tabungan Gudang"
                                     android:textColor="#ABFFFFFF"
@@ -129,30 +134,33 @@
 
                         </LinearLayout>
 
+                        <!--  Layout Dashboard Jumlah  -->
                         <LinearLayout
-                            android:layout_marginTop="20dp"
-                            android:paddingBottom="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:paddingStart="10dp"
                             android:paddingTop="16dp"
                             android:paddingEnd="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:paddingBottom="16dp">
 
                             <!--  Jumlah Barang  -->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
                                 <!--  Value Jumlah Barang  -->
                                 <TextView
+                                    android:id="@+id/tv_total_product"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/gilroy_bold"
+                                    android:fontFamily="@font/gilroy_semibold"
                                     android:text="40"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
 
@@ -161,6 +169,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:fontFamily="@font/gilroy_medium"
                                     android:text="Jumlah Barang"
                                     android:textColor="#ABFFFFFF"
@@ -172,16 +182,19 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical">
 
                                 <!--  Value Jumlah Barang  -->
                                 <TextView
+                                    android:id="@+id/tv_total_stock"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/gilroy_bold"
+                                    android:fontFamily="@font/gilroy_semibold"
                                     android:text="200.000"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
 
@@ -192,6 +205,8 @@
                                     android:layout_marginTop="4dp"
                                     android:fontFamily="@font/gilroy_medium"
                                     android:text="Jumlah Stock"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:textColor="#ABFFFFFF"
                                     android:textSize="14sp" />
 
@@ -199,13 +214,140 @@
 
 
                         </LinearLayout>
-
                     </LinearLayout>
-
-
-
-
                 </com.google.android.material.card.MaterialCardView>
+
+                <!--  Dashboard Horizontal  -->
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_end_nested"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_start_nested"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_savings_and_quantity">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/dashboard_menu_in_a_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/sky_blue_dashboard"
+                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="14dp"
+                            tools:ignore="RtlSymmetry">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                app:cardCornerRadius="100dp"
+                                app:strokeWidth="0dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_dropbox"
+                                    app:tint="@color/sky_blue_dashboard" />
+
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <TextView
+                                android:id="@+id/tv_total_product_out_in_a_day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/gilroy_semibold"
+                                android:maxLines="1"
+                                android:text="224"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/gilroy_medium"
+                                android:text="Barang Keluar Hari Ini"
+                                android:textColor="#ABFFFFFF"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/dashboard_menu_out_a_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/pink_dashboard"
+                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="14dp"
+                            tools:ignore="RtlSymmetry">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                app:cardCornerRadius="100dp"
+                                app:strokeWidth="0dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/box_arrow_out_up_right"
+                                    app:tint="@color/pink_dashboard" />
+
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <TextView
+                                android:id="@+id/tv_total_stock_out_a_day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/gilroy_semibold"
+                                android:maxLines="1"
+                                android:text="224"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/gilroy_medium"
+                                android:text="Stock Keluar Hari Ini"
+                                android:textColor="#ABFFFFFF"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </LinearLayout>
 
 
                 <androidx.constraintlayout.widget.Guideline
