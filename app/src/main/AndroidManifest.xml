@@ -29,8 +29,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".views.worker.warehouse.product.detail.update.UpdateProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.worker.warehouse.product.detail.DetailProductActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".views.worker.warehouse.tab.allproduct.AllProductActivity"
             android:exported="false" />
@@ -61,16 +64,13 @@
         <activity
             android:name=".views.splash.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-<!--    Activity Utama    -->
-<!--
+        </activity> <!-- Activity Utama -->
+        <!--
             <activity
             android:name=".views.splash.SplashActivity"
             android:exported="true">
@@ -80,9 +80,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-    -->
-
+        -->
         <activity
             android:name=".views.main.MainActivity"
             android:exported="false" />

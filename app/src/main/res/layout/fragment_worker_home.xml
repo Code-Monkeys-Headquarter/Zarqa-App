@@ -217,7 +217,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!--  Dashboard Horizontal  -->
+                <!--  Dashboard Product & Stock Out in a day  -->
                 <LinearLayout
                     android:id="@+id/linearLayout5"
                     android:layout_width="0dp"
@@ -282,7 +282,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/gilroy_medium"
                                 android:text="Barang Keluar Hari Ini"
-                                android:textColor="#ABFFFFFF"
+                                android:textColor="#D3FFFFFF"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -341,15 +341,16 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/gilroy_medium"
                                 android:text="Stock Keluar Hari Ini"
-                                android:textColor="#ABFFFFFF"
+                                android:textColor="#D3FFFFFF"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
-
-
                 </LinearLayout>
 
+                <!--  Menu  -->
 
+
+                <!--  Guideline  -->
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_start_nested"
                     android:layout_width="wrap_content"

@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.worker.warehouse.product.add.AddProductActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.worker.warehouse.product.add.AddProductActivity">
+
+
+        <!--  Title and Back Button  -->
+        <LinearLayout
+            android:id="@+id/linear_layout_dashboard_and_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/gilroy_semibold"
+                android:text="Update Produk"
+                android:textAlignment="textEnd"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toTopOf="@+id/guideline_top"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_dashboard_and_title">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfpro_medium"
+                android:text="@string/worker_product_add_product_information_title"
+                android:textSize="22sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nama Produk" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_product_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Warna" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_product_range_low_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Peringatan Stok Rendah"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/sfpro_medium"
+                android:maxLines="1"
+                android:text="Ukuran, Harga dan Stok Produk"
+                android:textSize="18sp" />
+
+            <!--  Varian Produk  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--  Ukuran S  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_s"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="S"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_s"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_s"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--  Ukuran M  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_m"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="M"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_m"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--  Ukuran L  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_l"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="L"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_l"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_l"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--  Ukuran XL  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_xl"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="XL"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_xl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_xl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--  Ukuran XXL  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_xxl"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="XXL"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_xxl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_xxl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!--  Ukuran ALL  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_varian_product_size_all"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfpro_bold"
+                        android:maxLines="1"
+                        android:text="ALL"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_price_all"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_product_stock_all"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Stok"
+                            android:inputType="number"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/black"
+                android:text="Update"
+                app:cornerRadius="8dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

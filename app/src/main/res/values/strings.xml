@@ -60,5 +60,42 @@
     <!-- Search code.monkeys.zarqa.data.source.remote.request.product.Product -->
     <string name="search_product_hint">Cari produk disini</string>
 
+    <!--  List Color  -->
+    <string name="warna_baju_putih">PUTIH</string>
+    <string name="warna_baju_hitam">HITAM</string>
+    <string name="warna_baju_dusty">DUSTY</string>
+    <string name="warna_baju_army">ARMY</string>
+    <string name="warna_baju_mocca">MOCCA</string>
+
+    <string name="warna_baju_hijau_botol">HIJAU BOTOL</string>
+    <string name="warna_baju_milo">MILO</string>
+    <string name="warna_baju_abu_muda">ABU MUDA</string>
+    <string name="warna_baju_navy">NAVY</string>
+
+    <string name="warna_baju_hitam_milo">HITAM MILO</string>
+    <string name="warna_baju_milo_hitam">MILO HITAM</string>
+    <string name="warna_baju_hitam_lavender">HITAM LAVENDER</string>
+    <string name="warna_baju_lavender_hitam">LAVENDER HITAM</string>
+    <string name="warna_baju_hitam_mint">HITAM MINT</string>
+
+    <string name="warna_baju_mint_hitam">MINT HITAM</string>
+    <string name="warna_baju_hitam_putih">HITAM PUTIH</string>
+    <string name="warna_baju_sage">SAGE</string>
+    <string name="warna_baju_teracota">TERACOTA</string>
+
+    <string name="warna_baju_lavender">LAVENDER</string>
+    <string name="warna_baju_emerald">EMERALD</string>
+    <string name="warna_baju_putih_bw">PUTIH BW</string>
+    <string name="warna_baju_cream">CREAM</string>
+    <string name="warna_baju_denim">DENIM</string>
+
+    <string name="warna_baju_abu_tua">ABU TUA</string>
+    <string name="warna_baju_pink_baby">PINK BABY</string>
+    <string name="warna_baju_coktan">COKTAN</string>
+    <string name="warna_baju_coksu">COKSU</string>
+    <string name="warna_baju_royal_blue">ROYAL BLUE</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.views.auth.login.LoginViewModel
 import code.monkeys.zarqa.views.auth.register.RegisterViewModel
+import code.monkeys.zarqa.views.worker.home.WorkerHomeViewModel
 import code.monkeys.zarqa.views.worker.warehouse.product.add.AddProductViewModel
 import code.monkeys.zarqa.views.worker.warehouse.product.detail.DetailProductViewModel
+import code.monkeys.zarqa.views.worker.warehouse.product.detail.update.UpdateProductViewModel
 import code.monkeys.zarqa.views.worker.warehouse.product.restock.TakeProductViewModel
 import code.monkeys.zarqa.views.worker.warehouse.tab.allproduct.AllProductViewModel
 
@@ -23,8 +25,12 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.F
             return AddProductViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(AllProductViewModel::class.java)) {
             return AllProductViewModel(repository) as T
-        } else if(modelClass.isAssignableFrom(DetailProductViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(DetailProductViewModel::class.java)) {
             return DetailProductViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(UpdateProductViewModel::class.java)) {
+            return UpdateProductViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(WorkerHomeViewModel::class.java)) {
+            return WorkerHomeViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

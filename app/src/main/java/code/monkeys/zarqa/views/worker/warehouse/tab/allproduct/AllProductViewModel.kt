@@ -10,33 +10,6 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class AllProductViewModel(private val repository: Repository) : ViewModel() {
-//    private val _products = MutableLiveData<List<DataItem>>()
-//    val products: LiveData<List<DataItem>> get() = _products
-//
-//    private val _status = MutableLiveData<String>()
-//    val status: LiveData<String> get() = _status
-//
-//    private val _code = MutableLiveData<Int>()
-//    val code: LiveData<Int> get() = _code
-//
-//    fun fetchProducts(token: String) {
-//        viewModelScope.launch {
-//            try {
-//                val response = repository.getProducts(token)
-//                if (response.isSuccessful) {
-//                    _products.postValue(response.body()?.data?.filterNotNull() ?: emptyList())
-//                    _status.postValue(response.body()?.status ?: "Unknown status")
-//                    _code.postValue(response.body()?.code ?: 0)
-//                } else {
-//                    _status.postValue("Failed")
-//                    _code.postValue(response.code())
-//                }
-//            } catch (e: Exception) {
-//                _status.postValue("Error: ${e.message}")
-//                _code.postValue(-1)
-//            }
-//        }
-//    }
 
     private val _products = MutableLiveData<List<DataItem>>()
     val products: LiveData<List<DataItem>> get() = _products

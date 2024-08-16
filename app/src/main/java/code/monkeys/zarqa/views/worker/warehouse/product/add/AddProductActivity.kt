@@ -82,29 +82,6 @@ class AddProductActivity : AppCompatActivity() {
                 startCameraX()
             }
 
-            tvProductImageTitle.setOnClickListener {}
-
-//            tvTitle.setOnClickListener {
-//                edtProductName.setText("Test Product ${CommonUtils.getCurrentDate()}")
-//                edtProductColor.setText("Test Color ${CommonUtils.getCurrentDate()}")
-//                edtProductRangeLowStock.setText("10")
-//                edtProductPriceS.setText("10000")
-//                edtProductStockS.setText("10")
-//                edtProductPriceM.setText("10000")
-//                edtProductStockM.setText("10")
-//                edtProductPriceL.setText("10000")
-//                edtProductStockL.setText("10")
-//                edtProductPriceXl.setText("10000")
-//                edtProductStockXl.setText("10")
-//                edtProductPriceXxl.setText("10000")
-//                edtProductStockXxl.setText("10")
-//                edtProductPriceAll.setText("10000")
-//                edtProductStockAll.setText("10")
-//
-//                CommonUtils.showToast(
-//                    this@AddProductActivity, "Uri : $currentImageUri, Path : $filePathImage"
-//                )
-//            }
             btnSave.setOnClickListener {
                 showConfirmationDialog()
             }
@@ -270,80 +247,6 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-//    private fun showConfirmationDialog() {
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle("Konfirmasi")
-//        builder.setMessage("Apakah Anda yakin ingin menambahkan produk ini?")
-//
-//        builder.setPositiveButton("Ya") { dialog, _ ->
-//            // Menampilkan Loading Sebelum Proses
-//            showLoading()
-//            binding.apply {
-//                val name = edtProductName.text.toString().trim()
-//                val color = edtProductColor.text.toString().trim()
-//                val lowStockAlert = edtProductRangeLowStock.text.toString().toIntOrNull() ?: 0
-//                val productImageUri = penampungStringDariCloudinary ?: DEFAULT_IMAGE_URI
-//
-//                // Mengambil harga dan stok untuk setiap ukuran produk dengan default 0 jika tidak diisi
-////                val sizeS = "S"
-////                val pricesS = edtProductPriceS.text.toString().toIntOrNull() ?: 0
-////                val stockS = edtProductStockS.text.toString().toIntOrNull() ?: 0
-////
-////                val sizeM = "M"
-////                val pricesM = edtProductPriceM.text.toString().toIntOrNull() ?: 0
-////                val stockM = edtProductStockM.text.toString().toIntOrNull() ?: 0
-////
-////                val sizeL = "L"
-////                val pricesL = edtProductPriceL.text.toString().toIntOrNull() ?: 0
-////                val stockL = edtProductStockL.text.toString().toIntOrNull() ?: 0
-////
-////                val sizeXL = "XL"
-////                val pricesXL = edtProductPriceXl.text.toString().toIntOrNull() ?: 0
-////                val stockXL = edtProductStockXl.text.toString().toIntOrNull() ?: 0
-////
-////                val sizeXXL = "XXL"
-////                val pricesXXL = edtProductPriceXxl.text.toString().toIntOrNull() ?: 0
-////                val stockXXL = edtProductStockXxl.text.toString().toIntOrNull() ?: 0
-////
-////                val sizeALL = "ALL"
-////                val pricesALL = edtProductPriceAll.text.toString().toIntOrNull() ?: 0
-////                val stockALL = edtProductStockAll.text.toString().toIntOrNull() ?: 0
-//
-//                if (validateInput(name, color, lowStockAlert)) {
-//                    val productTypeS = ProductType(sizeS, pricesS, stockS)
-//                    val productTypeM = ProductType(sizeM, pricesM, stockM)
-//                    val productTypeL = ProductType(sizeL, pricesL, stockL)
-//                    val productTypeXL = ProductType(sizeXL, pricesXL, stockXL)
-//                    val productTypeXXL = ProductType(sizeXXL, pricesXXL, stockXXL)
-//                    val productTypeALL = ProductType(sizeALL, pricesALL, stockALL)
-//                    val product = Product(
-//                        name,
-//                        listOf(productImageUri),
-//                        color = color,
-//                        productType = listOf(
-//                            productTypeS,
-//                            productTypeM,
-//                            productTypeL,
-//                            productTypeXL,
-//                            productTypeXXL,
-//                            productTypeALL
-//                        )
-//                    )
-//                    val token = CommonUtils.showToken(this@AddProductActivity)
-//                    productViewModel.addProduct(token, product)
-//                }
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        builder.setNegativeButton("Batal") { dialog, _ ->
-//            dialog.dismiss()
-//        }
-//
-//        val dialog: AlertDialog = builder.create()
-//        dialog.show()
-//    }
-
     private fun showConfirmationDialog() {
         AlertDialog.Builder(this).apply {
             setTitle("Confirmation")
@@ -407,7 +310,6 @@ class AddProductActivity : AppCompatActivity() {
 
         val newProduct = Product(
             name = productName,
-            listOf(productImageUri),
             color = color,
             productType = listOf(
                 productTypeS,

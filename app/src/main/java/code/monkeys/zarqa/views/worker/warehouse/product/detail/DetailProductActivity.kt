@@ -1,6 +1,7 @@
 package code.monkeys.zarqa.views.worker.warehouse.product.detail
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,11 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import code.monkeys.zarqa.R
+import code.monkeys.zarqa.data.source.remote.response.ProductTypeItem
 import code.monkeys.zarqa.databinding.ActivityDetailProductBinding
 import code.monkeys.zarqa.repository.Repository
 import code.monkeys.zarqa.utils.CommonUtils
 import code.monkeys.zarqa.utils.DataStoreManager
 import code.monkeys.zarqa.utils.ViewModelFactory
+import code.monkeys.zarqa.views.worker.warehouse.product.detail.update.UpdateProductActivity
 import code.monkeys.zarqa.views.worker.warehouse.tab.adapter.ListProductTypeAdapter
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
@@ -122,6 +125,7 @@ class DetailProductActivity : AppCompatActivity() {
                     tvProductName.text = it.name
                     tvProductColor.text = it.color
                     tvProductTotalStock.text = it.totalStock.toString()
+
                     Glide.with(this@DetailProductActivity)
                         .load(it.images.getOrNull(0))
                         .into(ivProductImage)
@@ -129,6 +133,8 @@ class DetailProductActivity : AppCompatActivity() {
                     val adapter = ListProductTypeAdapter(it.productType)
                     binding.rvProductType.adapter = adapter
                     hideLoading()
+
+                    editProduct(it.id, it.name, it.color, productLowStock = "0" ,it.productType)
                 }
             }
 
@@ -224,6 +230,28 @@ class DetailProductActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    private fun editProduct(
+        productId: String,
+        productName: String,
+        productColor: String,
+        productLowStock: String,
+        productType: List<ProductTypeItem>
+    ) {
+        binding.apply {
+            fabEdit.setOnClickListener {
+                val intent =
+                    Intent(this@DetailProductActivity, UpdateProductActivity::class.java).apply {
+                        putExtra("PRODUCT_ID", productId)
+                        putExtra("PRODUCT_NAME", productName)
+                        putExtra("PRODUCT_COLOR", productColor)
+                        putExtra("PRODUCT_LOW_STOCK", productLowStock)
+                        putParcelableArrayListExtra("PRODUCT_TYPE", ArrayList(productType))
+                    }
+                startActivity(intent)
+            }
         }
     }
 }

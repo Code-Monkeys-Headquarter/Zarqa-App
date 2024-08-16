@@ -4,6 +4,7 @@ import android.app.Application
 import code.monkeys.zarqa.data.source.remote.ApiConfig
 import code.monkeys.zarqa.data.source.remote.ApiService
 import code.monkeys.zarqa.data.source.remote.request.product.Product
+import code.monkeys.zarqa.data.source.remote.response.DashboardSummaryResponse
 import code.monkeys.zarqa.data.source.remote.response.LoginResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductDetailResponse
 import code.monkeys.zarqa.data.source.remote.response.ProductResponse
@@ -87,6 +88,25 @@ class Repository(application: Application) {
                 Result.failure(e)
             }
         }
+    }
+
+    suspend fun updateProduct(token: String, productId: String, product: Product): Result<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.updateProduct(token, productId, product)
+                if (response.isSuccessful) {
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Throwable(response.message()))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun getDashboardSummary(token: String): Response<DashboardSummaryResponse> {
+        return apiService.getDashboardSummary(token)
     }
 
 }

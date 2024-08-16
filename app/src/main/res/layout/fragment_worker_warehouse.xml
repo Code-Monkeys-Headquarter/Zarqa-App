@@ -30,8 +30,8 @@
         <ImageView
             android:id="@+id/btn_search"
             android:layout_width="24dp"
-            android:layout_gravity="center"
             android:layout_height="24dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_search" />
     </LinearLayout>
 
@@ -205,10 +205,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
+        android:elevation="4dp"
+        android:translationZ="2dp"
         app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -219,19 +223,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Semua Produk"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:fontFamily="@font/gilroy_semibold"
                 android:padding="16dp"
-                android:textSize="16sp"
-                />
+                android:text="Semua Produk"
+                android:textSize="16sp" />
 
             <ImageView
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
                 android:rotation="180"
                 android:src="@drawable/ic_arrow_forward" />
 
@@ -246,10 +249,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
+        android:elevation="4dp"
+        android:translationZ="2dp"
         app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/cv_all_product">
+        app:layout_constraintTop_toBottomOf="@+id/cv_all_product"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"

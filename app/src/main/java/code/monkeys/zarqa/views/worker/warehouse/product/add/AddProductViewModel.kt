@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import code.monkeys.zarqa.data.source.remote.request.product.Product
-import code.monkeys.zarqa.data.source.remote.request.product.ProductType
 import code.monkeys.zarqa.repository.Repository
 import kotlinx.coroutines.launch
 
